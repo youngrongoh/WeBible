@@ -1,8 +1,13 @@
-import './app.css';
+import styles from './app.module.css';
+import Dashboard from './components/dashboard/dashboard';
+import Sidebar from './components/sidebar/sidebar';
 
 function App() {
   return (
-    <h1>Hello :)</h1>
+    <div className={styles.app}>
+      <Sidebar />
+      <Dashboard />
+    </div>
   );
 }
 
