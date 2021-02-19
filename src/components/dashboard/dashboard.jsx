@@ -5,8 +5,14 @@ import styles from './dashboard.module.css';
 const Dashboard = (props) => {
   return (
     <main className={styles.dashboard}>
-      <RecordSheet />
-      <RecordSheet />
+      <div className={styles.user}>
+        <RecordSheet />
+      </div>
+      <div className={styles.box}>
+        <RecordSheet />
+        <RecordSheet />
+        <RecordSheet />
+      </div>
     </main>
   );
 };

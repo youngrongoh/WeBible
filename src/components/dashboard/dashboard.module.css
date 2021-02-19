@@ -1,4 +1,13 @@
+@value makerIvory from '/src/common/colors.css';
+
 .dashboard {
   flex: 1;
-  background-color: olivedrab;
+  display: flex;
+  flex-direction: column;
+  background-color: makerIvory;
+}
+
+.box {
+  height: 100%;
+  overflow: auto;
 }

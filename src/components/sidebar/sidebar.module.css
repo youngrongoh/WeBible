@@ -1,5 +1,29 @@
+@value makerNavy, makerWhite, makerShadow from '/src/common/colors.css';
+
 .sidebar {
-  flex-basis: 20%;
-  background-color: salmon;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 240px;
+  background-color: makerNavy;
+  color: makerWhite;
   text-align: center;
+}
+
+.sidebar:before {
+  position: absolute;
+  top: 0;
+  right: -5px;
+  content: '';
+  width: 5px;
+  height: 100%;
+  background: makerShadow;
+  opacity: 0.8;
+}
+
+.logo {
+  width: 120px;
+  margin-bottom: 0.8em;
 }

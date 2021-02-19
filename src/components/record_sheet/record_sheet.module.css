@@ -1,4 +1,46 @@
+@value makerWhite, makerBlack, makerGray, makerLightIvory from '/src/common/colors.css';
+
 .sheet {
-  height: 20%;
-  background-color: wheat;
+  display: flex;
+  height: 15em;
+  background-color: makerLightIvory;
+  border-bottom: 1px solid makerGray;
+  padding: 1em;
+  overflow: hidden;
+}
+
+.profile {
+  font-size: 0.8rem;
+  color: black;
+}
+
+.list {
+  position: relative;
+  margin-left: 1em;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  min-height: 1em;
+  margin: 0.4em 0;
+  font-size: 1rem;
+}
+
+.name {
+  width: 8em;
+  font-weight: bold;
+  text-align: center;
+  margin: 0;
+}
+
+.button {
+  display: inline-block;
+  width: 1.5em;
+  height: 1.5em;
+  font-size: 0.8em;
+  background-color: makerWhite;
+  border: 1px solid makerBlack;
+  border-radius: 50%;
+  margin-right: 0.3em;
 }
