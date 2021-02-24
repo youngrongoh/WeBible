@@ -2,45 +2,24 @@
 
 .sheet {
   display: flex;
-  height: 15em;
+  height: 9em;
   background-color: makerLightIvory;
   border-bottom: 1px solid makerGray;
-  padding: 1em;
+  padding: 1.5em 0em 1.5em 2em;
   overflow: hidden;
 }
 
 .profile {
-  font-size: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 0.7rem;
   color: black;
+  margin-right: 1.5em;
 }
 
 .list {
   position: relative;
-  margin-left: 1em;
-}
-
-.item {
-  display: flex;
-  align-items: center;
-  min-height: 1em;
-  margin: 0.4em 0;
-  font-size: 1rem;
-}
-
-.name {
-  width: 8em;
-  font-weight: bold;
-  text-align: center;
-  margin: 0;
-}
-
-.button {
-  display: inline-block;
-  width: 1.5em;
-  height: 1.5em;
-  font-size: 0.8em;
-  background-color: makerWhite;
-  border: 1px solid makerBlack;
-  border-radius: 50%;
-  margin-right: 0.3em;
+  width: 100%;
+  overflow-y: auto;
 }

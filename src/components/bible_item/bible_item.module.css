@@ -1,0 +1,28 @@
+@value makerWhite, makerBlack from '/src/common/colors.css';
+
+.item {
+  display: flex;
+  align-items: center;
+  min-height: 1em;
+  margin: 0.4em 0;
+  font-size: 1rem;
+}
+
+.name {
+  min-width: 7em;
+  font-weight: bold;
+  text-align: center;
+  margin: 0;
+}
+
+.button {
+  display: inline-block;
+  width: 2.5em;
+  height: 2.5em;
+  font-size: 0.8em;
+  background-color: makerWhite;
+  border: 1px solid makerBlack;
+  border-radius: 50%;
+  margin-right: 0.2em;
+  margin-bottom: 0.2em;
+}

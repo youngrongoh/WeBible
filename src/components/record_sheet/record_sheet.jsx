@@ -1,30 +1,24 @@
 import React from 'react';
-import Profile from '../profile/profile';
+import Avatar from '../avatar/avatar';
+import ProfileButton from '../profile_button/profile_button';
+import BibleItem from '../bible_item/bible_item';
 import styles from './record_sheet.module.css';
 
-const RecordSheet = (props) => {
+const RecordSheet = ({ user, bibleList }) => {
   return (
     <section className={styles.sheet}>
-      <div className={styles.profile}>
-        <Profile />
-      </div>
+      {user && (
+        <div className={styles.profile}>
+          <Avatar />
+          <ProfileButton />
+        </div>
+      )}
       <ul className={styles.list}>
-        <li className={styles.item}>
-          <p className={styles.name}>Genesis</p>
-          <form className={styles.form}>
-            <button className={styles.button}>1</button>
-            <button className={styles.button}>2</button>
-            <button className={styles.button}>3</button>
-          </form>
-        </li>
-        <li className={styles.item}>
-          <p className={styles.name}>1 Corinthians</p>
-          <form className={styles.form}>
-            <button className={styles.button}>1</button>
-            <button className={styles.button}>2</button>
-            <button className={styles.button}>3</button>
-          </form>
-        </li>
+        {Object.values(bibleList).map((testament) => {
+          return Object.keys(testament).map((key) => (
+            <BibleItem key={key} bible={testament[key]} />
+          ));
+        })}
       </ul>
     </section>
   );

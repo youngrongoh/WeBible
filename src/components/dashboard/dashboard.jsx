@@ -2,16 +2,16 @@ import React from 'react';
 import RecordSheet from '../record_sheet/record_sheet';
 import styles from './dashboard.module.css';
 
-const Dashboard = (props) => {
+const Dashboard = ({ bibleList }) => {
   return (
     <main className={styles.dashboard}>
       <div className={styles.user}>
-        <RecordSheet />
+        <RecordSheet user={false} bibleList={bibleList} />
       </div>
       <div className={styles.box}>
-        <RecordSheet />
-        <RecordSheet />
-        <RecordSheet />
+        <RecordSheet user={true} bibleList={bibleList} />
+        <RecordSheet user={true} bibleList={bibleList} />
+        <RecordSheet user={true} bibleList={bibleList} />
       </div>
     </main>
   );
