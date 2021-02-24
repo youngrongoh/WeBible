@@ -2,10 +2,10 @@ import React from 'react';
 import Profile from '../profile/profile';
 import styles from './sidebar.module.css';
 
-const Sidebar = (props) => {
+const Sidebar = ({ profile }) => {
   return (
     <aside className={styles.sidebar}>
-      <Profile />
+      <Profile profile={profile} />
       <img className={styles.logo} src="images/logo.png" alt="logo" />
     </aside>
   );

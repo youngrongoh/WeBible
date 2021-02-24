@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import styles from './app.module.css';
 import Dashboard from './components/dashboard/dashboard';
+import ProfileEditForm from './components/profile_edit_form/profile_edit_form';
 import Sidebar from './components/sidebar/sidebar';
 import * as BIBLE_LIST from './data/bible_list.json';
 
@@ -12,6 +13,12 @@ function App() {
     2: [1, 2, 3, 7],
     40: [5, 8],
     42: [2, 3, 5],
+  });
+  const [profile, setProfile] = useState({
+    name: 'Rong',
+    message: '안녕하세요 :)',
+    goal: '신구약 1독',
+    imageURL: null,
   });
 
   const getReadChapters = (bible, chapter, target) => {
@@ -35,14 +42,19 @@ function App() {
     });
   };
 
+  const editProfile = (profile) => {
+    setProfile(profile);
+  };
+
   return (
     <div className={styles.app}>
-      <Sidebar />
-      <Dashboard
+      <Sidebar profile={profile} />
+      <ProfileEditForm profile={profile} editProfile={editProfile} />
+      {/* <Dashboard
         bibleList={bibleList}
         records={records}
         updateReadList={updateReadList}
-      />
+      /> */}
     </div>
   );
 }

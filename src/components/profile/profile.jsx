@@ -2,13 +2,13 @@ import React from 'react';
 import Avatar from '../avatar/avatar';
 import ProfileButton from '../profile_button/profile_button';
 import styles from './profile.module.css';
-const Profile = (props) => {
+const Profile = ({ profile }) => {
   return (
     <section className={styles.profile}>
-      <Avatar />
-      <ProfileButton />
-      <p className={styles.message}>안녕하세요</p>
-      <p className={styles.goal}>"신구약 1독"</p>
+      <Avatar url={profile.imageURL} />
+      <ProfileButton name={profile.name} />
+      <p className={styles.message}>{profile.message}</p>
+      <p className={styles.goal}>"{profile.goal}"</p>
     </section>
   );
 };
