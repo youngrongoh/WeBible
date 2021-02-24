@@ -1,0 +1,30 @@
+@value makerWhite, makerBlack, makerOrange, makerNavy from '/src/common/colors.css';
+
+.button {
+  display: inline-block;
+  width: 2.5em;
+  height: 2.5em;
+  font-size: 0.8em;
+  background-color: makerWhite;
+  border: 1px dashed makerNavy;
+  border-radius: 50%;
+  margin-right: 0.2em;
+  margin-bottom: 0.2em;
+  opacity: 0.5;
+  transition: opacity 300ms ease;
+}
+
+.button.readonly {
+  cursor: auto;
+}
+
+.button:not(.readonly):hover {
+  background-color: makerOrange;
+  opacity: 0.8;
+}
+
+.button.checked {
+  background-color: makerOrange;
+  border-style: solid;
+  opacity: 1;
+}
