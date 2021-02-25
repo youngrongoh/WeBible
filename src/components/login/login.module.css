@@ -1,0 +1,113 @@
+@value makerShadow, makerWhite, makerGray, makerDarkGray, makerNavy from '/src/common/colors.css';
+
+.container {
+  position: relative;
+  width: 100%;
+  background-color: makerDarkGray;
+}
+
+.login {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  width: 30em;
+  background-color: makerWhite;
+  border-radius: 1em;
+  overflow: hidden;
+  box-shadow: makerShadow;
+}
+
+.header {
+  background-color: makerNavy;
+  color: makerWhite;
+  padding: 0 2em;
+}
+
+.form {
+  padding: 2.5em 2em 2.5em 2em;
+}
+
+.label {
+  display: block;
+  font-size: 1.2em;
+  margin-bottom: 0.8em;
+}
+
+.input {
+  box-sizing: border-box;
+  width: 100%;
+  font-size: 1.2rem;
+  outline: none;
+  border: none;
+  border-bottom: 2px solid makerGray;
+  background-color: transparent;
+  padding: 0.3em 0.5em;
+  margin-top: 0.5em;
+  transition: border 1s ease;
+}
+
+.input:focus {
+  border-bottom: 2px solid makerNavy;
+}
+
+.signUp {
+  color: makerDarkGray;
+  font-size: 0.8rem;
+  margin-left: 1em;
+  margin-bottom: 0.5em;
+}
+
+.signUpBtn {
+  color: makerDarkGray;
+  font-weight: bold;
+  font-size: 0.8rem;
+  text-decoration: underline;
+  transition: color 300ms ease;
+}
+
+.signUpBtn:hover {
+  color: makerNavy;
+}
+
+.buttons {
+  width: 100%;
+  text-align: center;
+  padding-bottom: 2em;
+}
+
+.loginBtn,
+.button {
+  font-weight: bold;
+  border-radius: 0.3em;
+  transition: opacity 300ms ease;
+}
+
+.loginBtn {
+  float: right;
+  background-color: makerGray;
+  padding: 1em 5em;
+}
+
+.button {
+  background-color: makerNavy;
+  font-size: 1rem;
+  color: makerWhite;
+  width: 70%;
+  padding: 0.5em 5em;
+}
+
+.loginBtn:hover,
+.button:hover {
+  opacity: 0.8;
+}
+
+.logo {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 15em;
+  margin: 1em 1.5em;
+}

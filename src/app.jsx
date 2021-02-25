@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import styles from './app.module.css';
 import Dashboard from './components/dashboard/dashboard';
+import Login from './components/login/login';
 import ProfileEditForm from './components/profile_edit_form/profile_edit_form';
 import Sidebar from './components/sidebar/sidebar';
 import * as BIBLE_LIST from './data/bible_list.json';
@@ -48,8 +49,9 @@ function App() {
 
   return (
     <div className={styles.app}>
-      <Sidebar profile={profile} />
-      <ProfileEditForm profile={profile} editProfile={editProfile} />
+      <Login />
+      {/* <Sidebar profile={profile} /> */}
+      {/* <ProfileEditForm profile={profile} editProfile={editProfile} /> */}
       {/* <Dashboard
         bibleList={bibleList}
         records={records}
