@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import styles from './app.module.css';
 import Dashboard from './components/dashboard/dashboard';
 import Login from './components/login/login';
@@ -48,16 +49,27 @@ function App() {
   };
 
   return (
-    <div className={styles.app}>
-      <Login />
-      {/* <Sidebar profile={profile} /> */}
-      {/* <ProfileEditForm profile={profile} editProfile={editProfile} /> */}
-      {/* <Dashboard
-        bibleList={bibleList}
-        records={records}
-        updateReadList={updateReadList}
-      /> */}
-    </div>
+    <Router>
+      <div className={styles.app}>
+        <Switch>
+          <Route path="/" exact>
+            <Login />
+          </Route>
+          <Route path="/profile">
+            <Sidebar profile={profile} />
+            <ProfileEditForm profile={profile} editProfile={editProfile} />
+          </Route>
+          <Route path="/record">
+            <Sidebar profile={profile} />
+            <Dashboard
+              bibleList={bibleList}
+              records={records}
+              updateReadList={updateReadList}
+            />
+          </Route>
+        </Switch>
+      </div>
+    </Router>
   );
 }
 
