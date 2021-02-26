@@ -1,7 +1,30 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styles from './login.module.css';
+import { useHistory } from 'react-router-dom';
 
-const Login = (props) => {
+const Login = ({ authService }) => {
+  const history = useHistory();
+
+  const onLogin = (provider) => {
+    authService.login(provider).then((result) => {
+      history.push({ pathname: '/', state: { id: result.user.uid } });
+    });
+  };
+
+  const onProviderClick = (event) => {
+    const providerName = event.target.dataset.provider;
+    const provider = authService.getProvider(providerName);
+    onLogin(provider);
+  };
+
+  useEffect(() => {
+    authService.onAuthChanged((user) => {
+      if (user) {
+        history.push({ pathname: '/', state: { id: user.uid } });
+      }
+    });
+  });
+
   return (
     <section className={styles.container}>
       <div className={styles.login}>
@@ -24,7 +47,13 @@ const Login = (props) => {
           <button className={styles.loginBtn}>로그인</button>
         </form>
         <div className={styles.buttons}>
-          <button className={styles.button}>Google 계정으로 로그인</button>
+          <button
+            className={styles.button}
+            data-provider="Google"
+            onClick={onProviderClick}
+          >
+            Google 계정으로 로그인
+          </button>
         </div>
       </div>
       <img className={styles.logo} src="images/logo.png" alt="logo" />

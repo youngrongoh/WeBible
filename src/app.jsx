@@ -9,7 +9,7 @@ import * as BIBLE_LIST from './data/bible_list.json';
 
 const bibleList = BIBLE_LIST.default;
 
-function App() {
+function App({ authService }) {
   const [records, setRecords] = useState({
     1: [1, 2, 5, 10],
     2: [1, 2, 3, 7],
@@ -52,19 +52,19 @@ function App() {
     <Router>
       <div className={styles.app}>
         <Switch>
-          <Route path="/" exact>
-            <Login />
+          <Route path="/login">
+            <Login authService={authService} />
           </Route>
           <Route path="/profile">
-            <Sidebar profile={profile} />
             <ProfileEditForm profile={profile} editProfile={editProfile} />
           </Route>
-          <Route path="/record">
-            <Sidebar profile={profile} />
+          <Route path="/" exact>
             <Dashboard
+              authService={authService}
               bibleList={bibleList}
               records={records}
               updateReadList={updateReadList}
+              profile={profile}
             />
           </Route>
         </Switch>
