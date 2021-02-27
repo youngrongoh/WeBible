@@ -3,8 +3,9 @@ import { useHistory } from 'react-router-dom';
 import Sidebar from '../sidebar/sidebar';
 import styles from './profile_edit_form.module.css';
 
-const ProfileEditForm = ({ authService, profile, editProfile }) => {
+const ProfileEditForm = ({ authService, database, profile, editProfile }) => {
   const [preview, setPreview] = useState({ ...profile });
+  const [userId, setUserId] = useState();
   const history = useHistory();
 
   const nameRef = useRef();
@@ -40,7 +41,9 @@ const ProfileEditForm = ({ authService, profile, editProfile }) => {
     const name = nameRef.current.value;
     const message = msgRef.current.value;
     const goal = goalRef.current.value;
-    editProfile({ ...preview, name, message, goal });
+    const updated = { ...preview, name, message, goal };
+    editProfile(updated);
+    database.saveUserData('profile', userId, updated);
   };
 
   const onImgBtnClick = (event) => {
@@ -54,10 +57,23 @@ const ProfileEditForm = ({ authService, profile, editProfile }) => {
   };
 
   useEffect(() => {
+    if (!userId) {
+      return;
+    }
+    const stopSync = database.syncUserData('profile', userId, (profile) => {
+      editProfile(profile);
+      setPreview(profile);
+    });
+    return () => stopSync();
+  }, [userId, database, editProfile]);
+
+  useEffect(() => {
     authService.onAuthChanged((user) => {
       if (user == null) {
         history.push('/login');
+        return;
       }
+      setUserId(user.uid);
     });
   });
 
@@ -98,7 +114,7 @@ const ProfileEditForm = ({ authService, profile, editProfile }) => {
                 type="text"
                 name="name"
                 id="name"
-                value={preview.name}
+                value={preview.name || ''}
                 onChange={onChange}
               />
             </label>
@@ -111,7 +127,7 @@ const ProfileEditForm = ({ authService, profile, editProfile }) => {
                 type="text"
                 name="message"
                 id="message"
-                value={preview.message}
+                value={preview.message || ''}
                 onChange={onChange}
               />
             </label>
@@ -122,7 +138,7 @@ const ProfileEditForm = ({ authService, profile, editProfile }) => {
                 ref={goalRef}
                 className={styles.goal}
                 name="goal"
-                value={preview.goal}
+                value={preview.goal || ''}
                 onChange={onChange}
               >
                 <option value="구약 1독">구약 1독</option>

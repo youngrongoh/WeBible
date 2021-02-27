@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import styles from './app.module.css';
 import Dashboard from './components/dashboard/dashboard';
@@ -8,19 +8,14 @@ import * as BIBLE_LIST from './data/bible_list.json';
 
 const bibleList = BIBLE_LIST.default;
 
-function App({ authService }) {
+function App({ authService, database }) {
   const [records, setRecords] = useState({
     1: [1, 2, 5, 10],
     2: [1, 2, 3, 7],
     40: [5, 8],
     42: [2, 3, 5],
   });
-  const [profile, setProfile] = useState({
-    name: 'Rong',
-    message: '안녕하세요 :)',
-    goal: '신구약 1독',
-    imageURL: null,
-  });
+  const [profile, setProfile] = useState({});
 
   const getReadChapters = (bible, chapter, target) => {
     if (records[bible] === undefined) {
@@ -43,9 +38,9 @@ function App({ authService }) {
     });
   };
 
-  const editProfile = (profile) => {
+  const editProfile = useCallback((profile) => {
     setProfile(profile);
-  };
+  }, []);
 
   return (
     <Router>
@@ -57,6 +52,7 @@ function App({ authService }) {
           <Route path="/profile">
             <ProfileEditForm
               authService={authService}
+              database={database}
               profile={profile}
               editProfile={editProfile}
             />
