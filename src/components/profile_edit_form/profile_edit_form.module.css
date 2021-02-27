@@ -1,25 +1,73 @@
-@value makerWhite, makerIvory, makerOrange, makerGray, makerNavy from '/src/common/colors.css';
+@value makerWhite, makerIvory, makerOrange, makerGray, makerNavy, makerGradient from '/src/common/colors.css';
 
 .edit {
+  position: relative;
   flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   height: 100%;
   background-color: makerIvory;
 }
 
+.header {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  padding: 1em 1.5em;
+}
+
+.header:before {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -0.5em;
+  width: 100%;
+  height: 0.5em;
+  background: makerGradient;
+  opacity: 0.2;
+}
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+}
+
+.back {
+  width: 1.2em;
+  height: 1.2em;
+  border: solid makerNavy;
+  border-top: 0.4em;
+  border-right: 0.4em;
+  border-radius: 0.2em;
+  margin-right: 2em;
+  transform: rotate(45deg);
+  opacity: 0.5;
+  transition: opacity 300ms ease;
+}
+
+.back:hover {
+  opacity: 1;
+}
+
 .title {
-  margin-bottom: 2em;
+  margin: 0;
+}
+
+.logout {
+  background-color: makerGray;
+  padding: 0.5em 0.8em;
+  font-weight: bold;
+  border-radius: 0.3em;
 }
 
 .form {
+  height: 100%;
   display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .left {
-  margin-right: 2em;
+  padding-bottom: 12em;
+  margin-right: 4em;
 }
 
 .image {
@@ -72,7 +120,8 @@
   margin-bottom: 0.3em;
 }
 
-.input {
+.input,
+.goal {
   width: 100%;
   font-size: 1em;
   outline: none;
@@ -82,8 +131,12 @@
   padding: 0.5em;
 }
 
+.goal {
+  width: 107%;
+}
+
 .buttons {
-  margin: 1.5em auto;
+  margin: 3em auto;
 }
 
 .button {
@@ -92,17 +145,19 @@
   font-size: 0.8em;
   padding: 1em 3em;
   border-radius: 0.3em;
-  margin-right: 1em;
+  margin-right: 1.5em;
   opacity: 1;
   transition: opacity 250ms ease;
 }
 
-.button:hover {
+.button:hover,
+.logout:hover {
   opacity: 0.8;
 }
 
-.button.cancel {
+.button.reset {
   background-color: makerGray;
+  padding: 1em 2em;
 }
 
 .button.edit {

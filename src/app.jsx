@@ -55,7 +55,11 @@ function App({ authService }) {
             <Login authService={authService} />
           </Route>
           <Route path="/profile">
-            <ProfileEditForm profile={profile} editProfile={editProfile} />
+            <ProfileEditForm
+              authService={authService}
+              profile={profile}
+              editProfile={editProfile}
+            />
           </Route>
           <Route path="/" exact>
             <Dashboard

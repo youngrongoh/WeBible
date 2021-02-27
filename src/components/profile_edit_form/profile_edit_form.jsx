@@ -1,9 +1,9 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Sidebar from '../sidebar/sidebar';
 import styles from './profile_edit_form.module.css';
 
-const ProfileEditForm = ({ profile, editProfile }) => {
+const ProfileEditForm = ({ authService, profile, editProfile }) => {
   const [preview, setPreview] = useState({ ...profile });
   const history = useHistory();
 
@@ -22,9 +22,17 @@ const ProfileEditForm = ({ profile, editProfile }) => {
     setPreview({ ...preview, [name]: value });
   };
 
-  const onCancelClick = (event) => {
+  const goBack = () => history.push('/');
+
+  const onLogout = () => {
+    authService.logout();
+  };
+
+  const onReset = (event) => {
     event.preventDefault();
-    history.push('/');
+    nameRef.current.value = profile.name;
+    msgRef.current.value = profile.message;
+    goalRef.current.value = profile.goal;
   };
 
   const onEditClick = (event) => {
@@ -40,16 +48,32 @@ const ProfileEditForm = ({ profile, editProfile }) => {
     imgRef.current.click();
   };
 
-  const onImageChange = (event) => {
+  const onImageChange = () => {
     const file = imgRef.current.files[0];
     console.log(file);
   };
+
+  useEffect(() => {
+    authService.onAuthChanged((user) => {
+      if (user == null) {
+        history.push('/login');
+      }
+    });
+  });
 
   return (
     <>
       <Sidebar profile={profile} />
       <main className={styles.edit}>
-        <h1 className={styles.title}>프로필 변경</h1>
+        <header className={styles.header}>
+          <div className={styles.headerLeft}>
+            <button className={styles.back} onClick={goBack}></button>
+            <h1 className={styles.title}>프로필 변경</h1>
+          </div>
+          <button className={styles.logout} onClick={onLogout}>
+            로그아웃
+          </button>
+        </header>
         <form className={styles.form}>
           <div className={styles.left}>
             <img className={styles.image} src={url} alt="preview" />
@@ -96,7 +120,7 @@ const ProfileEditForm = ({ profile, editProfile }) => {
               <span className={styles.name}>목표</span>
               <select
                 ref={goalRef}
-                className={styles.input}
+                className={styles.goal}
                 name="goal"
                 value={preview.goal}
                 onChange={onChange}
@@ -109,16 +133,16 @@ const ProfileEditForm = ({ profile, editProfile }) => {
 
             <div className={styles.buttons}>
               <button
-                className={`${styles.button} ${styles.cancel}`}
-                onClick={onCancelClick}
+                className={`${styles.button} ${styles.reset}`}
+                onClick={onReset}
               >
-                취소
+                되돌리기
               </button>
               <button
                 className={`${styles.button} ${styles.edit}`}
                 onClick={onEditClick}
               >
-                수정
+                바꾸기
               </button>
             </div>
           </div>
