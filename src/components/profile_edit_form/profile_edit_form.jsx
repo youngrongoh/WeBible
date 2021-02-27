@@ -1,9 +1,11 @@
 import React, { useRef, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import Sidebar from '../sidebar/sidebar';
 import styles from './profile_edit_form.module.css';
 
 const ProfileEditForm = ({ profile, editProfile }) => {
   const [preview, setPreview] = useState({ ...profile });
+  const history = useHistory();
 
   const nameRef = useRef();
   const msgRef = useRef();
@@ -22,6 +24,7 @@ const ProfileEditForm = ({ profile, editProfile }) => {
 
   const onCancelClick = (event) => {
     event.preventDefault();
+    history.push('/');
   };
 
   const onEditClick = (event) => {

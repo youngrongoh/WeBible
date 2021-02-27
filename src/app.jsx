@@ -4,7 +4,6 @@ import styles from './app.module.css';
 import Dashboard from './components/dashboard/dashboard';
 import Login from './components/login/login';
 import ProfileEditForm from './components/profile_edit_form/profile_edit_form';
-import Sidebar from './components/sidebar/sidebar';
 import * as BIBLE_LIST from './data/bible_list.json';
 
 const bibleList = BIBLE_LIST.default;
