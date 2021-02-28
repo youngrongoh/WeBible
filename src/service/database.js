@@ -1,8 +1,8 @@
 import firebaseApp from './firebase';
 
 class Database {
-  saveUserData(category, userId, profile) {
-    firebaseApp.database().ref(`users/${userId}/${category}`).set(profile);
+  saveUserData(category, userId, data) {
+    firebaseApp.database().ref(`users/${userId}/${category}`).set(data);
   }
 
   syncUserData(category, userId, onUpdate) {

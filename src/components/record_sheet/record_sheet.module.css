@@ -2,7 +2,6 @@
 
 .sheet {
   display: flex;
-  height: 9em;
   background-color: makerLightIvory;
   border-bottom: 1px solid makerGray;
   padding: 1.5em 0em 1.5em 2em;

@@ -4,7 +4,7 @@ import ProfileButton from '../profile_button/profile_button';
 import BibleItem from '../bible_item/bible_item';
 import styles from './record_sheet.module.css';
 
-const RecordSheet = ({ user, bibleList, records, updateReadList }) => {
+const RecordSheet = ({ users, bibleList, records, checkChapter }) => {
   const renderItems = () =>
     Object.keys(bibleList).map((key) => {
       const bible = bibleList[key];
@@ -14,15 +14,15 @@ const RecordSheet = ({ user, bibleList, records, updateReadList }) => {
           key={key}
           bible={bible}
           checkedChapters={checkedChapters}
-          editable={user ? false : true}
-          updateReadList={updateReadList}
+          editable={users ? false : true}
+          checkChapter={checkChapter}
         />
       );
     });
 
   return (
     <section className={styles.sheet}>
-      {user && (
+      {users && (
         <div className={styles.profile}>
           <Avatar />
           <ProfileButton />

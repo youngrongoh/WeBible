@@ -17,26 +17,14 @@ function App({ authService, database }) {
   });
   const [profile, setProfile] = useState({});
 
-  const getReadChapters = (bible, chapter, target) => {
-    if (records[bible] === undefined) {
-      return [target];
-    }
-
-    if (chapter) {
-      return records[bible].filter((_chapter) => _chapter !== chapter);
-    } else {
-      const updated = [...records[bible]];
-      updated.push(target);
-      return updated;
-    }
-  };
-
-  const updateReadList = (bible, chapter, text) => {
-    setRecords((records) => {
-      const updated = getReadChapters(bible, chapter, text);
-      return { ...records, [bible]: updated };
-    });
-  };
+  /* Update records state with a data passed by the clicked CheckButton.
+  bible: ID of the bible which the button belongs.
+  chapter: Chapter number of the button.
+  text: textContent of the button.
+   */
+  const updateRecords = useCallback((onUpdate) => {
+    setRecords(onUpdate);
+  }, []);
 
   const editProfile = useCallback((profile) => {
     setProfile(profile);
@@ -60,9 +48,10 @@ function App({ authService, database }) {
           <Route path="/" exact>
             <Dashboard
               authService={authService}
+              database={database}
               bibleList={bibleList}
               records={records}
-              updateReadList={updateReadList}
+              updateRecords={updateRecords}
               profile={profile}
             />
           </Route>
