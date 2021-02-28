@@ -12,6 +12,7 @@ const ProfileEditForm = ({
 }) => {
   const [preview, setPreview] = useState({ ...profile });
   const [userId, setUserId] = useState();
+  const [image, setImage] = useState();
   const history = useHistory();
 
   const nameRef = useRef();
@@ -40,9 +41,17 @@ const ProfileEditForm = ({
     setPreview(profile);
   };
 
-  const onEditClick = (event) => {
+  const onEditClick = async (event) => {
     event.preventDefault();
-    const updated = { ...preview };
+    let imageURL;
+    if (image) {
+      const result = await imageUploader.upload(image, userId);
+      imageURL = result.url;
+    } else {
+      imageURL = profile.imageURL;
+    }
+
+    const updated = { ...preview, imageURL };
     editProfile(updated);
     database.saveUserData('profile', userId, updated);
   };
@@ -52,10 +61,17 @@ const ProfileEditForm = ({
     imgRef.current.click();
   };
 
-  const onImageChange = async () => {
+  const onImageChange = (event) => {
     const file = imgRef.current.files[0];
-    const result = await imageUploader.upload(file, userId);
-    setPreview({ ...preview, imageURL: result.url });
+    if (!file) {
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      setPreview({ ...preview, imageURL: event.target.result });
+    };
+    reader.readAsDataURL(file);
+    setImage(file);
   };
 
   // Sync profile data if userId be present.
