@@ -8,9 +8,10 @@ const Dashboard = ({
   authService,
   database,
   bibleList,
+  profile,
   records,
   updateRecords,
-  profile,
+  editProfile,
 }) => {
   const [userId, setUserId] = useState();
   const history = useHistory();
@@ -30,7 +31,12 @@ const Dashboard = ({
     }
   };
 
-  const checkChapter = (bible, chapter, target) => {
+  /* Update records state with a data passed by the clicked CheckButton.
+   * bible: ID of the bible which the button belongs.
+   * chapter: Chapter number of the button.
+   * text: textContent of the button.
+   */
+  const updateChapter = (bible, chapter, target) => {
     const chapters = getChapters(bible, chapter, target);
     updateRecords((records) => {
       const updated = { ...records, [bible]: chapters };
@@ -39,12 +45,17 @@ const Dashboard = ({
     });
   };
 
+  // Sync user data data when the user is logged in.
   useEffect(() => {
     if (!userId) {
       return;
     }
-    database.syncUserData('records', userId, updateRecords);
-  }, [userId, database, updateRecords]);
+    const stopSync = database.syncUserData('', userId, (data) => {
+      editProfile(data.profile);
+      updateRecords(data.records);
+    });
+    return () => stopSync();
+  }, [userId, database, updateRecords, editProfile]);
 
   useEffect(() => {
     authService.onAuthChanged((user) => {
@@ -64,7 +75,7 @@ const Dashboard = ({
           users={false}
           bibleList={bibleList}
           records={records}
-          checkChapter={checkChapter}
+          updateChapter={updateChapter}
         />
       </main>
     </>

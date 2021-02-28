@@ -2,7 +2,7 @@ import React from 'react';
 import CheckButton from '../check_button/check_button';
 import styles from './bible_item.module.css';
 
-const BibleItem = ({ bible, checkedChapters, editable, checkChapter }) => {
+const BibleItem = ({ bible, checkedChapters, editable, updateChapter }) => {
   const renderButtons = () => {
     const result = [];
     for (let i = 0; i < bible.chapters; i++) {
@@ -16,7 +16,7 @@ const BibleItem = ({ bible, checkedChapters, editable, checkChapter }) => {
           number={i + 1}
           checkedChapter={checked}
           editable={editable}
-          checkChapter={checkChapter}
+          updateChapter={updateChapter}
         />
       );
     }

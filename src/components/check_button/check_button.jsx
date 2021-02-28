@@ -6,7 +6,7 @@ const CheckButton = ({
   bibleId,
   number,
   editable,
-  checkChapter,
+  updateChapter,
 }) => {
   const readonlyStyle = editable ? '' : styles.readonly;
 
@@ -15,7 +15,7 @@ const CheckButton = ({
       return;
     }
     const targetText = event.target.textContent;
-    checkChapter(bibleId, checkedChapter, parseInt(targetText));
+    updateChapter(bibleId, checkedChapter, parseInt(targetText));
   };
 
   return (

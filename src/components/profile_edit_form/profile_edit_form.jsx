@@ -56,6 +56,7 @@ const ProfileEditForm = ({ authService, database, profile, editProfile }) => {
     console.log(file);
   };
 
+  // Sync profile data if userId be present.
   useEffect(() => {
     if (!userId) {
       return;
@@ -67,6 +68,7 @@ const ProfileEditForm = ({ authService, database, profile, editProfile }) => {
     return () => stopSync();
   }, [userId, database, editProfile]);
 
+  // Determine whether redirect to login according to auth state when auth change.
   useEffect(() => {
     authService.onAuthChanged((user) => {
       if (user == null) {

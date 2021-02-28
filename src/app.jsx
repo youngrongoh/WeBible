@@ -9,19 +9,9 @@ import * as BIBLE_LIST from './data/bible_list.json';
 const bibleList = BIBLE_LIST.default;
 
 function App({ authService, database }) {
-  const [records, setRecords] = useState({
-    1: [1, 2, 5, 10],
-    2: [1, 2, 3, 7],
-    40: [5, 8],
-    42: [2, 3, 5],
-  });
+  const [records, setRecords] = useState({});
   const [profile, setProfile] = useState({});
 
-  /* Update records state with a data passed by the clicked CheckButton.
-  bible: ID of the bible which the button belongs.
-  chapter: Chapter number of the button.
-  text: textContent of the button.
-   */
   const updateRecords = useCallback((onUpdate) => {
     setRecords(onUpdate);
   }, []);
@@ -53,6 +43,7 @@ function App({ authService, database }) {
               records={records}
               updateRecords={updateRecords}
               profile={profile}
+              editProfile={editProfile}
             />
           </Route>
         </Switch>
