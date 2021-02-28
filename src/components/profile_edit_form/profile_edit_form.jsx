@@ -52,11 +52,10 @@ const ProfileEditForm = ({
     imgRef.current.click();
   };
 
-  const onImageChange = () => {
+  const onImageChange = async () => {
     const file = imgRef.current.files[0];
-    imageUploader.upload(file, (result) => {
-      setPreview({ ...preview, imageURL: result.url });
-    });
+    const result = await imageUploader.upload(file, userId);
+    setPreview({ ...preview, imageURL: result.url });
   };
 
   // Sync profile data if userId be present.
