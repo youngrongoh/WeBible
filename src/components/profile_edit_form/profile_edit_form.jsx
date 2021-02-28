@@ -3,7 +3,13 @@ import { useHistory } from 'react-router-dom';
 import Sidebar from '../sidebar/sidebar';
 import styles from './profile_edit_form.module.css';
 
-const ProfileEditForm = ({ authService, database, profile, editProfile }) => {
+const ProfileEditForm = ({
+  authService,
+  database,
+  imageUploader,
+  profile,
+  editProfile,
+}) => {
   const [preview, setPreview] = useState({ ...profile });
   const [userId, setUserId] = useState();
   const history = useHistory();
@@ -31,17 +37,12 @@ const ProfileEditForm = ({ authService, database, profile, editProfile }) => {
 
   const onReset = (event) => {
     event.preventDefault();
-    nameRef.current.value = profile.name;
-    msgRef.current.value = profile.message;
-    goalRef.current.value = profile.goal;
+    setPreview(profile);
   };
 
   const onEditClick = (event) => {
     event.preventDefault();
-    const name = nameRef.current.value;
-    const message = msgRef.current.value;
-    const goal = goalRef.current.value;
-    const updated = { ...preview, name, message, goal };
+    const updated = { ...preview };
     editProfile(updated);
     database.saveUserData('profile', userId, updated);
   };
@@ -53,7 +54,9 @@ const ProfileEditForm = ({ authService, database, profile, editProfile }) => {
 
   const onImageChange = () => {
     const file = imgRef.current.files[0];
-    console.log(file);
+    imageUploader.upload(file, (result) => {
+      setPreview({ ...preview, imageURL: result.url });
+    });
   };
 
   // Sync profile data if userId be present.

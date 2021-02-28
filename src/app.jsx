@@ -8,7 +8,7 @@ import * as BIBLE_LIST from './data/bible_list.json';
 
 const bibleList = BIBLE_LIST.default;
 
-function App({ authService, database }) {
+function App({ authService, database, imageUploader }) {
   const [records, setRecords] = useState({});
   const [profile, setProfile] = useState({});
 
@@ -31,6 +31,7 @@ function App({ authService, database }) {
             <ProfileEditForm
               authService={authService}
               database={database}
+              imageUploader={imageUploader}
               profile={profile}
               editProfile={editProfile}
             />
