@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import Profile from '../profile/profile';
 import styles from './sidebar.module.css';
 
@@ -11,4 +11,4 @@ const Sidebar = ({ profile }) => {
   );
 };
 
-export default Sidebar;
+export default memo(Sidebar);

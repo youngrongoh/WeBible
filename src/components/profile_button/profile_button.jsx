@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { useHistory } from 'react-router-dom';
 import styles from './profile_button.module.css';
 
-const ProfileButton = ({ name }) => {
+const ProfileButton = memo(({ name }) => {
   const history = useHistory();
 
   const goToEdit = () => {
@@ -14,6 +14,6 @@ const ProfileButton = ({ name }) => {
       {name}
     </button>
   );
-};
+});
 
 export default ProfileButton;

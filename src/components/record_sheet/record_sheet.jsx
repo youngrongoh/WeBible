@@ -8,7 +8,7 @@ const RecordSheet = ({ users, bibleList, records, updateChapter }) => {
   const renderItems = () =>
     Object.keys(bibleList).map((key) => {
       const bible = bibleList[key];
-      const checkedChapters = records ? records[key] : null;
+      const checkedChapters = records[key];
       return (
         <BibleItem
           key={key}

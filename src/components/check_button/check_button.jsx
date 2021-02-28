@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styles from './check_button.module.css';
 
 const CheckButton = ({
@@ -38,4 +38,4 @@ function getButtonStyle(chapter) {
   }
 }
 
-export default CheckButton;
+export default memo(CheckButton);

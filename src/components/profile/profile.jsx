@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { memo } from 'react';
 import Avatar from '../avatar/avatar';
 import ProfileButton from '../profile_button/profile_button';
 import styles from './profile.module.css';
+
 const Profile = ({ profile }) => {
   return (
     <section className={styles.profile}>
@@ -13,4 +14,4 @@ const Profile = ({ profile }) => {
   );
 };
 
-export default Profile;
+export default memo(Profile);

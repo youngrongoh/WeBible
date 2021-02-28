@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styles from './avatar.module.css';
 
-const Avatar = ({ url }) => {
+const Avatar = memo(({ url }) => {
   return (
     <div className={styles.avatar}>
       <img
@@ -11,6 +11,6 @@ const Avatar = ({ url }) => {
       />
     </div>
   );
-};
+});
 
 export default Avatar;

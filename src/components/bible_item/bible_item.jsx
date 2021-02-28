@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import CheckButton from '../check_button/check_button';
 import styles from './bible_item.module.css';
 
@@ -31,4 +31,4 @@ const BibleItem = ({ bible, checkedChapters, editable, updateChapter }) => {
   );
 };
 
-export default BibleItem;
+export default memo(BibleItem);
