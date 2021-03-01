@@ -14,6 +14,7 @@ const Dashboard = ({
   editProfile,
 }) => {
   const [userId, setUserId] = useState();
+  const [loading, setLoading] = useState(true);
   const history = useHistory();
 
   // Return an array removed a chapter of the clicked or contain it.
@@ -50,12 +51,14 @@ const Dashboard = ({
     if (!userId) {
       return;
     }
+    setLoading(true);
     const stopSync = database.syncUserData('', userId, (data) => {
       editProfile(data.profile);
       updateRecords(data.records);
     });
+    setLoading(false);
     return () => stopSync();
-  }, [userId, database, updateRecords, editProfile]);
+  }, [database, updateRecords, editProfile, userId]);
 
   useEffect(() => {
     authService.onAuthChanged((user) => {
@@ -65,10 +68,11 @@ const Dashboard = ({
       }
       setUserId(user.uid);
     });
-  });
+  }, [authService, history, userId]);
 
   return (
     <>
+      {loading && <div className={styles.loading}></div>}
       <Sidebar profile={profile} />
       <main className={styles.dashboard}>
         <RecordSheet

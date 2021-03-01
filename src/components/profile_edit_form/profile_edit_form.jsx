@@ -13,6 +13,7 @@ const ProfileEditForm = ({
   const [preview, setPreview] = useState({ ...profile });
   const [userId, setUserId] = useState();
   const [image, setImage] = useState();
+  const [loading, setLoading] = useState(true);
   const history = useHistory();
 
   const nameRef = useRef();
@@ -43,6 +44,7 @@ const ProfileEditForm = ({
 
   const onEditClick = async (event) => {
     event.preventDefault();
+    setLoading(true);
     let imageURL;
     if (image) {
       const result = await imageUploader.upload(image, userId);
@@ -54,6 +56,7 @@ const ProfileEditForm = ({
     const updated = { ...preview, imageURL };
     editProfile(updated);
     database.saveUserData('profile', userId, updated);
+    setLoading(false);
   };
 
   const onImgBtnClick = (event) => {
@@ -79,9 +82,11 @@ const ProfileEditForm = ({
     if (!userId) {
       return;
     }
+    setLoading(true);
     const stopSync = database.syncUserData('profile', userId, (profile) => {
       editProfile(profile);
       setPreview(profile);
+      setLoading(false);
     });
     return () => stopSync();
   }, [userId, database, editProfile]);
@@ -99,6 +104,7 @@ const ProfileEditForm = ({
 
   return (
     <>
+      {loading && <div className={styles.loading}></div>}
       <div className={styles.profile}>
         <Sidebar profile={profile} />
       </div>

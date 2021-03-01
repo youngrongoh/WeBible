@@ -12,8 +12,8 @@ function App({ authService, database, imageUploader }) {
   const [records, setRecords] = useState({});
   const [profile, setProfile] = useState({});
 
-  const updateRecords = useCallback((onUpdate) => {
-    setRecords(onUpdate);
+  const updateRecords = useCallback((records) => {
+    setRecords(records);
   }, []);
 
   const editProfile = useCallback((profile) => {
