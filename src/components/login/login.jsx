@@ -12,6 +12,7 @@ const Login = ({ authService }) => {
   };
 
   const onProviderClick = (event) => {
+    event.preventDefault();
     const providerName = event.target.dataset.provider;
     const provider = authService.getProvider(providerName);
     onLogin(provider);
@@ -30,6 +31,7 @@ const Login = ({ authService }) => {
       <div className={styles.login}>
         <header className={styles.header}>
           <h1>Login</h1>
+          <img className={styles.logo} src="images/logo.png" alt="logo" />
         </header>
         <form className={styles.form}>
           <label className={styles.label} htmlFor="id">
@@ -44,19 +46,18 @@ const Login = ({ authService }) => {
             <span>아직 계정이 없다면, </span>
             <button className={styles.signUpBtn}>가입하기</button>
           </div>
-          <button className={styles.loginBtn}>로그인</button>
+          <div className={styles.buttons}>
+            <button className={styles.loginBtn}>로그인</button>
+            <button
+              className={styles.button}
+              data-provider="Google"
+              onClick={onProviderClick}
+            >
+              Google 계정으로 로그인
+            </button>
+          </div>
         </form>
-        <div className={styles.buttons}>
-          <button
-            className={styles.button}
-            data-provider="Google"
-            onClick={onProviderClick}
-          >
-            Google 계정으로 로그인
-          </button>
-        </div>
       </div>
-      <img className={styles.logo} src="images/logo.png" alt="logo" />
     </section>
   );
 };

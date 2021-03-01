@@ -1,23 +1,25 @@
 @value makerShadow, makerWhite, makerGray, makerDarkGray, makerNavy from '/src/common/colors.css';
+@value narrowQuery from '/src/common/size.css';
 
 .container {
-  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
+  height: 100vh;
   background-color: makerDarkGray;
 }
 
 .login {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   display: flex;
   flex-direction: column;
-  width: 30em;
+  width: 100%;
+  max-width: 30em;
   background-color: makerWhite;
   border-radius: 1em;
-  overflow: hidden;
   box-shadow: makerShadow;
+  overflow: hidden;
+  z-index: 1;
 }
 
 .header {
@@ -62,8 +64,8 @@
 
 .signUpBtn {
   color: makerDarkGray;
-  font-weight: bold;
   font-size: 0.8rem;
+  font-weight: bold;
   text-decoration: underline;
   transition: color 300ms ease;
 }
@@ -73,30 +75,29 @@
 }
 
 .buttons {
-  width: 100%;
+  width: 70%;
   text-align: center;
-  padding-bottom: 2em;
+  margin: 1.5em auto 0 auto;
 }
 
 .loginBtn,
 .button {
+  width: 100%;
+  font-size: 1em;
   font-weight: bold;
   border-radius: 0.3em;
+  padding: 0.8em 0;
+  margin-bottom: 0.5em;
   transition: opacity 300ms ease;
 }
 
 .loginBtn {
-  float: right;
   background-color: makerGray;
-  padding: 1em 5em;
 }
 
 .button {
   background-color: makerNavy;
-  font-size: 1rem;
   color: makerWhite;
-  width: 70%;
-  padding: 0.5em 5em;
 }
 
 .loginBtn:hover,
@@ -110,4 +111,17 @@
   bottom: 0;
   width: 15em;
   margin: 1em 1.5em;
+}
+
+@media screen and (max-width: narrowQuery) {
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .logo {
+    position: relative;
+    width: 8em;
+    margin: 0;
+  }
 }

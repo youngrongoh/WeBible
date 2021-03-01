@@ -1,12 +1,13 @@
 @value makerNavy, makerWhite, makerShadow from '/src/common/colors.css';
+@value narrowQuery from '/src/common/size.css';
 
 .sidebar {
   position: relative;
   display: flex;
+  flex-basis: 15em;
   flex-direction: column;
   justify-content: space-between;
-  align-items: center;
-  width: 240px;
+  width: 100%;
   background-color: makerNavy;
   color: makerWhite;
   text-align: center;
@@ -25,5 +26,30 @@
 
 .logo {
   width: 120px;
-  margin-bottom: 0.8em;
+  margin: 0 auto 0.8em auto;
+}
+
+@media screen and (max-width: narrowQuery) {
+  .sidebar {
+    padding-top: 3em;
+    flex-direction: column-reverse;
+    font-size: 1.1rem;
+  }
+
+  .profile {
+    padding-bottom: 2em;
+  }
+
+  .fixed {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    background-color: makerNavy;
+    text-align: left;
+    z-index: 1;
+  }
+
+  .logo {
+    margin: 0.8em 1em;
+  }
 }

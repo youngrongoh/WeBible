@@ -1,4 +1,5 @@
 @value makerWhite, makerOrange from '/src/common/colors.css';
+@value narrowQuery from '/src/common/size.css';
 
 .profile {
   display: flex;
@@ -10,11 +11,33 @@
 
 .message {
   font-size: 1em;
-  margin: 0.5em;
+  margin: 0.5em 0;
 }
 
 .goal {
   font-size: 0.8em;
   color: makerOrange;
   margin: 0;
+}
+
+@media screen and (max-width: narrowQuery) {
+  .profile {
+    flex-direction: row;
+    align-items: start;
+    padding-left: 3em;
+  }
+
+  .container {
+    text-align: left;
+    font-size: 1.2rem;
+    margin-left: 1em;
+  }
+
+  .name {
+    font-size: 1.2em;
+  }
+
+  .message {
+    margin-left: 0.5em;
+  }
 }

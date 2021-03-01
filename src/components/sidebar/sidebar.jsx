@@ -5,8 +5,12 @@ import styles from './sidebar.module.css';
 const Sidebar = ({ profile }) => {
   return (
     <aside className={styles.sidebar}>
-      <Profile profile={profile} />
-      <img className={styles.logo} src="images/logo.png" alt="logo" />
+      <div className={styles.profile}>
+        <Profile profile={profile} />
+      </div>
+      <div className={styles.fixed}>
+        <img className={styles.logo} src="images/logo.png" alt="logo" />
+      </div>
     </aside>
   );
 };

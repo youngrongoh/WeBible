@@ -1,7 +1,16 @@
 @value makerWhite, makerIvory, makerOrange, makerGray, makerNavy, makerGradient from '/src/common/colors.css';
+@value makerWhite, makerIvory, makerOrange, makerGray, makerNavy, makerGradient from '/src/common/colors.css';
+@value narrowQuery, mediumQuery from '/src/common/size.css';
 
-.edit {
+.profile {
+  display: flex;
+  flex-basis: 15em;
+}
+
+.editor {
   position: relative;
+  display: flex;
+  flex-direction: column;
   flex: 1;
   height: 100%;
   background-color: makerIvory;
@@ -58,16 +67,18 @@
   border-radius: 0.3em;
 }
 
-.form {
-  height: 100%;
+.container {
+  width: 100%;
   display: flex;
+  flex: 1;
   align-items: center;
   justify-content: center;
+  padding: 3em 0;
 }
 
-.left {
-  padding-bottom: 12em;
-  margin-right: 4em;
+.form {
+  display: flex;
+  justify-content: space-between;
 }
 
 .image {
@@ -106,6 +117,7 @@
 
 .right {
   display: flex;
+  flex-basis: 60%;
   font-size: 1.2rem;
   flex-direction: column;
 }
@@ -122,6 +134,7 @@
 
 .input,
 .goal {
+  box-sizing: border-box;
   width: 100%;
   font-size: 1em;
   outline: none;
@@ -131,11 +144,8 @@
   padding: 0.5em;
 }
 
-.goal {
-  width: 107%;
-}
-
 .buttons {
+  text-align: center;
   margin: 3em auto;
 }
 
@@ -148,6 +158,10 @@
   margin-right: 1.5em;
   opacity: 1;
   transition: opacity 250ms ease;
+}
+
+.button:last-child {
+  margin-right: 0;
 }
 
 .button:hover,
@@ -163,4 +177,26 @@
 .button.edit {
   background-color: makerNavy;
   color: makerWhite;
+}
+
+@media screen and (max-width: mediumQuery) {
+  .form {
+    align-items: center;
+    flex-direction: column;
+  }
+  .left {
+    margin-bottom: 1em;
+  }
+  .buttons {
+    margin: 0;
+  }
+}
+
+@media screen and (max-width: narrowQuery) {
+  .editor {
+    height: 100vh;
+  }
+  .profile {
+    display: none;
+  }
 }

@@ -7,9 +7,13 @@ const Profile = ({ profile }) => {
   return (
     <section className={styles.profile}>
       <Avatar url={profile.imageURL} />
-      <ProfileButton name={profile.name} />
-      <p className={styles.message}>{profile.message}</p>
-      <p className={styles.goal}>"{profile.goal}"</p>
+      <div className={styles.container}>
+        <div className={styles.name}>
+          <ProfileButton name={profile.name} />
+        </div>
+        <p className={styles.message}>{profile.message}</p>
+        <p className={styles.goal}>"{profile.goal}"</p>
+      </div>
     </section>
   );
 };
