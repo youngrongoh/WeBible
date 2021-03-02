@@ -30,12 +30,14 @@
 }
 
 .group {
+  position: relative;
   text-align: left;
   padding: 1.5em;
 }
 
 .title {
   font-size: 1.2rem;
+  margin: 1em 0;
 }
 
 .button {
@@ -44,10 +46,16 @@
   width: 100%;
   margin-left: 1.2em;
   margin-bottom: 0.5em;
+  transition: 250ms ease;
 }
 
 .button:hover {
   opacity: 0.5;
+}
+
+.symbol {
+  font-size: 0.5em;
+  vertical-align: 0.2em;
 }
 
 @media screen and (max-width: narrowQuery) {

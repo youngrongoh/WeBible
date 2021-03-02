@@ -17,6 +17,16 @@ const Sidebar = ({ profile, groups }) => {
               <button className={styles.button}># {group}</button>
             </li>
           ))}
+          <li className={styles.item}>
+            <button className={styles.button}>
+              <span className={styles.symbol}>🔍</span> 찾아보기
+            </button>
+          </li>
+          <li className={styles.item}>
+            <button className={styles.button}>
+              <span className={styles.symbol}>⚙️</span> 설정
+            </button>
+          </li>
         </ul>
       </div>
       <div className={styles.fixed}>
