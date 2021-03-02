@@ -11,6 +11,17 @@ const bibleList = BIBLE_LIST.default;
 function App({ authService, database, imageUploader }) {
   const [records, setRecords] = useState({});
   const [profile, setProfile] = useState({});
+  const [groups, setGroups] = useState(['asdf', 'aserwe']);
+  const [allGroups, setAllGroups] = useState({
+    asdf: {
+      name: 'Happy friends',
+      users: ['Tom', 'Jack'],
+    },
+    aserwe: {
+      name: 'Lovely church',
+      users: ['Bob', 'Jane'],
+    },
+  });
 
   const updateRecords = useCallback((records) => {
     setRecords(records);
@@ -33,6 +44,7 @@ function App({ authService, database, imageUploader }) {
               database={database}
               imageUploader={imageUploader}
               profile={profile}
+              groups={groups}
               editProfile={editProfile}
             />
           </Route>
@@ -41,9 +53,10 @@ function App({ authService, database, imageUploader }) {
               authService={authService}
               database={database}
               bibleList={bibleList}
-              records={records}
-              updateRecords={updateRecords}
               profile={profile}
+              records={records}
+              groups={groups}
+              updateRecords={updateRecords}
               editProfile={editProfile}
             />
           </Route>

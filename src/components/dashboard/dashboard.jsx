@@ -10,6 +10,7 @@ const Dashboard = ({
   bibleList,
   profile,
   records,
+  groups,
   updateRecords,
   editProfile,
 }) => {
@@ -73,7 +74,7 @@ const Dashboard = ({
   return (
     <>
       {loading && <div className={styles.loading}></div>}
-      <Sidebar profile={profile} />
+      <Sidebar profile={profile} groups={groups} />
       <main className={styles.dashboard}>
         <RecordSheet
           users={false}

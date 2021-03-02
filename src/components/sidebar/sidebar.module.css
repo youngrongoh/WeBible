@@ -29,15 +29,31 @@
   margin: 0 auto 0.8em auto;
 }
 
+.group {
+  text-align: left;
+  padding: 1.5em;
+}
+
+.title {
+  font-size: 1.2rem;
+}
+
+.button {
+  font-size: 1em;
+  text-align: left;
+  width: 100%;
+  margin-left: 1.2em;
+  margin-bottom: 0.5em;
+}
+
+.button:hover {
+  opacity: 0.5;
+}
+
 @media screen and (max-width: narrowQuery) {
   .sidebar {
     padding-top: 3em;
-    flex-direction: column-reverse;
     font-size: 1.1rem;
-  }
-
-  .profile {
-    padding-bottom: 2em;
   }
 
   .fixed {
@@ -51,5 +67,23 @@
 
   .logo {
     margin: 0.8em 1em;
+  }
+
+  .group {
+    padding: 0;
+  }
+
+  .title {
+    display: inline-block;
+    margin-left: 1em;
+  }
+
+  .list,
+  .item {
+    display: inline-block;
+  }
+
+  .button {
+    margin: 0 0 0 1em;
   }
 }
