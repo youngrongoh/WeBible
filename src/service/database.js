@@ -2,16 +2,40 @@ import firebaseApp from './firebase';
 
 class Database {
   saveUserData(category, userId, data) {
-    firebaseApp.database().ref(`users/${userId}/${category}`).set(data);
+    const validCategory = checkCategory(category);
+    firebaseApp.database().ref(`users/${userId}/${validCategory}`).set(data);
   }
 
   syncUserData(category, userId, onUpdate) {
-    const ref = firebaseApp.database().ref(`users/${userId}/${category}`);
+    const validCategory = checkCategory(category);
+    const ref = firebaseApp.database().ref(`users/${userId}/${validCategory}`);
     ref.on('value', (snapshot) => {
       const value = snapshot.val();
       onUpdate && onUpdate(value);
     });
     return () => ref.off();
+  }
+
+  syncGroupUsers(groupId, onUpdate) {
+    const ref = firebaseApp.database().ref('users');
+    const conditionRef = ref.orderByChild('groups').startAt(groupId);
+    conditionRef.on('value', (snapshot) => {
+      const value = snapshot.val();
+      onUpdate && onUpdate(value);
+    });
+    return () => conditionRef.off();
+  }
+}
+
+function checkCategory(value) {
+  switch (value) {
+    case 'profile':
+    case 'records':
+      return value;
+    case 'all':
+      return '';
+    default:
+      throw new Error(`invalid category: ${value}`);
   }
 }
 
