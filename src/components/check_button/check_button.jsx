@@ -19,14 +19,16 @@ const CheckButton = ({
   };
 
   return (
-    <button
-      className={`${styles.button} ${getButtonStyle(
-        checkedChapter
-      )} ${readonlyStyle}`}
-      onClick={onClick}
-    >
-      {number}
-    </button>
+    <li className={styles.item}>
+      <button
+        className={`${styles.button} ${getButtonStyle(
+          checkedChapter
+        )} ${readonlyStyle}`}
+        onClick={onClick}
+      >
+        {number}
+      </button>
+    </li>
   );
 };
 

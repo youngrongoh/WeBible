@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import Header from '../header/header';
 import Sidebar from '../sidebar/sidebar';
 import styles from './profile_edit_form.module.css';
 
@@ -8,6 +9,8 @@ const ProfileEditForm = ({
   database,
   imageUploader,
   profile,
+  groups,
+  onLogout,
   editProfile,
 }) => {
   const [preview, setPreview] = useState({ ...profile });
@@ -29,12 +32,6 @@ const ProfileEditForm = ({
     const name = target.name;
     const value = target.value;
     setPreview({ ...preview, [name]: value });
-  };
-
-  const goBack = () => history.push('/');
-
-  const onLogout = () => {
-    authService.logout();
   };
 
   const onReset = (event) => {
@@ -106,18 +103,10 @@ const ProfileEditForm = ({
     <>
       {loading && <div className={styles.loading}></div>}
       <div className={styles.profile}>
-        <Sidebar profile={profile} />
+        <Sidebar profile={profile} groups={groups} />
       </div>
       <main className={styles.editor}>
-        <header className={styles.header}>
-          <div className={styles.headerLeft}>
-            <button className={styles.back} onClick={goBack}></button>
-            <h1 className={styles.title}>프로필 변경</h1>
-          </div>
-          <button className={styles.logout} onClick={onLogout}>
-            로그아웃
-          </button>
-        </header>
+        <Header title="프로필 변경" onLogout={onLogout} />
         <div className={styles.container}>
           <form className={styles.form}>
             <div className={styles.left}>

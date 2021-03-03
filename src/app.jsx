@@ -11,17 +11,21 @@ const bibleList = BIBLE_LIST.default;
 function App({ authService, database, imageUploader }) {
   const [records, setRecords] = useState({});
   const [profile, setProfile] = useState({});
-  const [groups, setGroups] = useState(['asdf', 'aserwe']);
+  const [groups, setGroups] = useState({
+    kj34h53kj6: 'Happy friends',
+    jk45h23k: 'Lovely church',
+  });
   const [allGroups, setAllGroups] = useState({
-    asdf: {
+    kj34h53kj6: {
       name: 'Happy friends',
-      users: ['Tom', 'Jack'],
+      users: ['NIzO64MSicfd8xKNMFC3NYHmqFn1'],
     },
-    aserwe: {
+    jk45h23k: {
       name: 'Lovely church',
       users: ['Bob', 'Jane'],
     },
   });
+  const [currentGroup, setCurrentGroup] = useState(null);
 
   const updateRecords = useCallback((records) => {
     setRecords(records);
@@ -30,6 +34,14 @@ function App({ authService, database, imageUploader }) {
   const editProfile = useCallback((profile) => {
     setProfile(profile);
   }, []);
+
+  const getGroupId = (groupId) => {
+    setCurrentGroup(groupId);
+  };
+
+  const onLogout = () => {
+    authService.logout();
+  };
 
   return (
     <Router>
@@ -45,6 +57,22 @@ function App({ authService, database, imageUploader }) {
               imageUploader={imageUploader}
               profile={profile}
               groups={groups}
+              onLogout={onLogout}
+              editProfile={editProfile}
+            />
+          </Route>
+          <Route path={`/group/:groupId`}>
+            <Dashboard
+              authService={authService}
+              database={database}
+              bibleList={bibleList}
+              profile={profile}
+              records={records}
+              groups={groups}
+              group={allGroups[currentGroup]}
+              getGroupId={getGroupId}
+              onLogout={onLogout}
+              updateRecords={updateRecords}
               editProfile={editProfile}
             />
           </Route>

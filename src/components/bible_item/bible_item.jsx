@@ -26,7 +26,7 @@ const BibleItem = ({ bible, checkedChapters, editable, updateChapter }) => {
   return (
     <li className={styles.item}>
       <p className={styles.name}>{bible.name}</p>
-      <div>{renderButtons()}</div>
+      <ul>{renderButtons()}</ul>
     </li>
   );
 };

@@ -8,13 +8,27 @@
   overflow: hidden;
 }
 
+.sheet.group {
+  height: 12em;
+}
+
 .profile {
   display: flex;
   flex-direction: column;
   align-items: center;
   font-size: 0.7rem;
   color: black;
-  margin-right: 1.5em;
+  border-right: 1px solid makerGray;
+  padding-right: 2em;
+  margin: auto 0 auto 2.5em;
+}
+
+.container {
+  display: flex;
+}
+
+.container.group {
+  font-size: 0.8rem;
 }
 
 .list {
