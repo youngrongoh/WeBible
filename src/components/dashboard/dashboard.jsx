@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import RecordSheet from '../record_sheet/record_sheet';
-import Sidebar from '../sidebar/sidebar';
 import styles from './dashboard.module.css';
 import { useHistory, useParams } from 'react-router-dom';
 import Header from '../header/header';
@@ -9,16 +8,14 @@ const Dashboard = ({
   authService,
   database,
   bibleList,
-  profile,
   records,
-  groups,
   group,
   getGroupId,
   updateRecords,
   editProfile,
+  changeLoadState,
 }) => {
   const [userId, setUserId] = useState();
-  const [loading, setLoading] = useState(true);
   const [users, setUsers] = useState({});
   const history = useHistory();
   let { groupId } = useParams();
@@ -38,15 +35,15 @@ const Dashboard = ({
     }
   };
 
-  /* Update records state with a data passed by the clicked CheckButton.
-   * bible: ID of the bible which the button belongs.
-   * chapter: Chapter number of the button.
-   * text: textContent of the button.
+  /** Update records state with a data passed by the clicked CheckButton.
+   * @params bible: ID of the bible which the button belongs.
+   * @params chapter: Chapter number of the button.
+   * @params target: the clicked button.
    */
-  const updateChapter = (bible, chapter, target) => {
-    const chapters = getChapters(bible, chapter, target);
+  const updateChapter = (bibleId, chapter, target) => {
+    const chapters = getChapters(bibleId, chapter, target);
     updateRecords((records) => {
-      const updated = { ...records, [bible]: chapters };
+      const updated = { ...records, [bibleId]: chapters };
       database.saveUserData('records', userId, updated);
       return updated;
     });
@@ -57,14 +54,14 @@ const Dashboard = ({
     if (!userId) {
       return;
     }
-    setLoading(true);
+    changeLoadState(true);
     const stopSync = database.syncUserData('all', userId, (data) => {
       editProfile(data.profile);
       updateRecords(data.records);
+      changeLoadState(false);
     });
-    setLoading(false);
     return () => stopSync();
-  }, [database, updateRecords, editProfile, userId]);
+  }, [database, userId, updateRecords, editProfile, changeLoadState]);
 
   useEffect(() => {
     authService.onAuthChanged((user) => {
@@ -76,18 +73,21 @@ const Dashboard = ({
     });
   }, [authService, history, userId]);
 
+  // Sync users data of a group when come in the group dashboard.
   useEffect(() => {
     getGroupId && getGroupId(groupId);
     if (groupId) {
-      const stopSync = database.syncGroupUsers(groupId, setUsers);
+      changeLoadState(true);
+      const stopSync = database.syncGroupUsers(groupId, (users) => {
+        setUsers(users);
+        changeLoadState(false);
+      });
       return () => stopSync();
     }
-  }, [groupId, getGroupId, database]);
+  }, [database, groupId, getGroupId, changeLoadState]);
 
   return (
     <>
-      {loading && <div className={styles.loading}></div>}
-      <Sidebar profile={profile} groups={groups} />
       <main className={styles.dashboard}>
         {group && (
           <Header title={`${group.name}`} member={group.users.length} />

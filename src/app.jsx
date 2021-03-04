@@ -1,6 +1,12 @@
 import { useCallback, useState } from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  useRouteMatch,
+} from 'react-router-dom';
 import styles from './app.module.css';
+import Sidebar from './components/sidebar/sidebar';
 import Dashboard from './components/dashboard/dashboard';
 import Login from './components/login/login';
 import ProfileEditForm from './components/profile_edit_form/profile_edit_form';
@@ -9,6 +15,27 @@ import * as BIBLE_LIST from './data/bible_list.json';
 const bibleList = BIBLE_LIST.default;
 
 function App({ authService, database, imageUploader }) {
+  return (
+    <Router>
+      <div className={styles.app}>
+        <Switch>
+          <Route path="/login">
+            <Login authService={authService} />
+          </Route>
+          <Route path="/">
+            <NestedRoute
+              authService={authService}
+              database={database}
+              imageUploader={imageUploader}
+            />
+          </Route>
+        </Switch>
+      </div>
+    </Router>
+  );
+}
+
+function NestedRoute({ authService, database, imageUploader }) {
   const [records, setRecords] = useState({});
   const [profile, setProfile] = useState({});
   const [groups, setGroups] = useState({
@@ -26,6 +53,10 @@ function App({ authService, database, imageUploader }) {
     },
   });
   const [currentGroup, setCurrentGroup] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [sidebar, setSidebar] = useState(true);
+  const { path } = useRouteMatch();
+  const _path = path === '/' ? '' : path;
 
   const updateRecords = useCallback((records) => {
     setRecords(records);
@@ -34,63 +65,64 @@ function App({ authService, database, imageUploader }) {
   const editProfile = useCallback((profile) => {
     setProfile(profile);
   }, []);
+  const changeLoadState = useCallback((loadState) => {
+    setLoading(loadState);
+  }, []);
 
-  const getGroupId = (groupId) => {
+  const getGroupId = useCallback((groupId) => {
     setCurrentGroup(groupId);
-  };
+  }, []);
+
+  const changeSidebarShow = useCallback((visible) => {
+    setSidebar(visible);
+    return visible;
+  }, []);
 
   const onLogout = () => {
     authService.logout();
   };
 
   return (
-    <Router>
-      <div className={styles.app}>
-        <Switch>
-          <Route path="/login">
-            <Login authService={authService} />
-          </Route>
-          <Route path="/profile">
-            <ProfileEditForm
-              authService={authService}
-              database={database}
-              imageUploader={imageUploader}
-              profile={profile}
-              groups={groups}
-              onLogout={onLogout}
-              editProfile={editProfile}
-            />
-          </Route>
-          <Route path={`/group/:groupId`}>
-            <Dashboard
-              authService={authService}
-              database={database}
-              bibleList={bibleList}
-              profile={profile}
-              records={records}
-              groups={groups}
-              group={allGroups[currentGroup]}
-              getGroupId={getGroupId}
-              onLogout={onLogout}
-              updateRecords={updateRecords}
-              editProfile={editProfile}
-            />
-          </Route>
-          <Route path="/" exact>
-            <Dashboard
-              authService={authService}
-              database={database}
-              bibleList={bibleList}
-              profile={profile}
-              records={records}
-              groups={groups}
-              updateRecords={updateRecords}
-              editProfile={editProfile}
-            />
-          </Route>
-        </Switch>
-      </div>
-    </Router>
+    <>
+      {loading && <div className={styles.loading}></div>}
+      {sidebar && <Sidebar profile={profile} groups={groups} />}
+      <Route path={`${_path}/profile`}>
+        <ProfileEditForm
+          authService={authService}
+          database={database}
+          imageUploader={imageUploader}
+          profile={profile}
+          onLogout={onLogout}
+          editProfile={editProfile}
+          changeLoadState={changeLoadState}
+          changeSidebarShow={changeSidebarShow}
+        />
+      </Route>
+      <Route path={`${_path}/group/:groupId`}>
+        <Dashboard
+          authService={authService}
+          database={database}
+          bibleList={bibleList}
+          records={records}
+          group={allGroups[currentGroup]}
+          getGroupId={getGroupId}
+          updateRecords={updateRecords}
+          editProfile={editProfile}
+          changeLoadState={changeLoadState}
+        />
+      </Route>
+      <Route path={path} exact>
+        <Dashboard
+          authService={authService}
+          database={database}
+          bibleList={bibleList}
+          records={records}
+          updateRecords={updateRecords}
+          editProfile={editProfile}
+          changeLoadState={changeLoadState}
+        />
+      </Route>
+    </>
   );
 }
 

@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Header from '../header/header';
-import Sidebar from '../sidebar/sidebar';
 import styles from './profile_edit_form.module.css';
 
 const ProfileEditForm = ({
@@ -9,14 +8,14 @@ const ProfileEditForm = ({
   database,
   imageUploader,
   profile,
-  groups,
   onLogout,
   editProfile,
+  changeLoadState,
+  changeSidebarShow,
 }) => {
   const [preview, setPreview] = useState({ ...profile });
   const [userId, setUserId] = useState();
   const [image, setImage] = useState();
-  const [loading, setLoading] = useState(true);
   const history = useHistory();
 
   const nameRef = useRef();
@@ -41,7 +40,7 @@ const ProfileEditForm = ({
 
   const onEditClick = async (event) => {
     event.preventDefault();
-    setLoading(true);
+    changeLoadState(true);
     let imageURL;
     if (image) {
       const result = await imageUploader.upload(image, userId);
@@ -53,7 +52,7 @@ const ProfileEditForm = ({
     const updated = { ...preview, imageURL };
     editProfile(updated);
     database.saveUserData('profile', userId, updated);
-    setLoading(false);
+    changeLoadState(false);
   };
 
   const onImgBtnClick = (event) => {
@@ -61,7 +60,7 @@ const ProfileEditForm = ({
     imgRef.current.click();
   };
 
-  const onImageChange = (event) => {
+  const onImageChange = () => {
     const file = imgRef.current.files[0];
     if (!file) {
       return;
@@ -79,14 +78,14 @@ const ProfileEditForm = ({
     if (!userId) {
       return;
     }
-    setLoading(true);
+    changeLoadState(true);
     const stopSync = database.syncUserData('profile', userId, (profile) => {
       editProfile(profile);
       setPreview(profile);
-      setLoading(false);
+      changeLoadState(false);
     });
     return () => stopSync();
-  }, [userId, database, editProfile]);
+  }, [userId, database, editProfile, changeLoadState]);
 
   // Determine whether redirect to login according to auth state when auth change.
   useEffect(() => {
@@ -99,90 +98,90 @@ const ProfileEditForm = ({
     });
   });
 
+  // Change the show state of sidebar in accordance whether mount or unmount this.
+  useEffect(() => {
+    changeSidebarShow(false);
+    return () => changeSidebarShow(true);
+  }, [changeSidebarShow]);
+
   return (
-    <>
-      {loading && <div className={styles.loading}></div>}
-      <div className={styles.profile}>
-        <Sidebar profile={profile} groups={groups} />
-      </div>
-      <main className={styles.editor}>
-        <Header title="프로필 변경" onLogout={onLogout} />
-        <div className={styles.container}>
-          <form className={styles.form}>
-            <div className={styles.left}>
-              <img className={styles.image} src={url} alt="preview" />
-              <button className={styles.imageButton} onClick={onImgBtnClick}>
-                이미지 변경
-              </button>
+    <main className={styles.editor}>
+      <Header title="프로필 변경" onLogout={onLogout} />
+      <div className={styles.container}>
+        <form className={styles.form}>
+          <div className={styles.left}>
+            <img className={styles.image} src={url} alt="preview" />
+            <button className={styles.imageButton} onClick={onImgBtnClick}>
+              이미지 변경
+            </button>
+            <input
+              ref={imgRef}
+              className={styles.imputFile}
+              type="file"
+              accept="image/*"
+              name="image"
+              onChange={onImageChange}
+            />
+          </div>
+          <div className={styles.right}>
+            <label htmlFor="name" className={styles.label}>
+              <span className={styles.name}>이름</span>
               <input
-                ref={imgRef}
-                className={styles.imputFile}
-                type="file"
-                accept="image/*"
-                name="image"
-                onChange={onImageChange}
+                ref={nameRef}
+                className={styles.input}
+                type="text"
+                name="name"
+                id="name"
+                value={preview.name || ''}
+                onChange={onChange}
               />
-            </div>
-            <div className={styles.right}>
-              <label htmlFor="name" className={styles.label}>
-                <span className={styles.name}>이름</span>
-                <input
-                  ref={nameRef}
-                  className={styles.input}
-                  type="text"
-                  name="name"
-                  id="name"
-                  value={preview.name || ''}
-                  onChange={onChange}
-                />
-              </label>
+            </label>
 
-              <label htmlFor="message" className={styles.label}>
-                <span className={styles.name}>상태메세지</span>
-                <input
-                  ref={msgRef}
-                  className={styles.input}
-                  type="text"
-                  name="message"
-                  id="message"
-                  value={preview.message || ''}
-                  onChange={onChange}
-                />
-              </label>
+            <label htmlFor="message" className={styles.label}>
+              <span className={styles.name}>상태메세지</span>
+              <input
+                ref={msgRef}
+                className={styles.input}
+                type="text"
+                name="message"
+                id="message"
+                value={preview.message || ''}
+                onChange={onChange}
+              />
+            </label>
 
-              <div className={styles.label}>
-                <span className={styles.name}>목표</span>
-                <select
-                  ref={goalRef}
-                  className={styles.goal}
-                  name="goal"
-                  value={preview.goal || ''}
-                  onChange={onChange}
-                >
-                  <option value="구약 1독">구약 1독</option>
-                  <option value="신약 1독">신약 1독</option>
-                  <option value="신구약 1독">신구약 1독</option>
-                </select>
-              </div>
-              <div className={styles.buttons}>
-                <button
-                  className={`${styles.button} ${styles.reset}`}
-                  onClick={onReset}
-                >
-                  되돌리기
-                </button>
-                <button
-                  className={`${styles.button} ${styles.edit}`}
-                  onClick={onEditClick}
-                >
-                  바꾸기
-                </button>
-              </div>
+            <div className={styles.label}>
+              <span className={styles.name}>목표</span>
+              <select
+                ref={goalRef}
+                className={styles.goal}
+                name="goal"
+                value={preview.goal || ''}
+                onChange={onChange}
+              >
+                <option value="구약 1독">구약 1독</option>
+                <option value="신약 1독">신약 1독</option>
+                <option value="신구약 1독">신구약 1독</option>
+              </select>
             </div>
-          </form>
-        </div>
-      </main>
-    </>
+            <div className={styles.buttons}>
+              <button
+                className={`${styles.button} ${styles.reset}`}
+                onClick={onReset}
+              >
+                되돌리기
+              </button>
+              <button
+                className={`${styles.button} ${styles.edit}`}
+                onClick={onEditClick}
+              >
+                바꾸기
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </main>
   );
 };
 

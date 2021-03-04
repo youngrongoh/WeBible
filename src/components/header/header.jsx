@@ -9,10 +9,12 @@ const Header = ({ title, member, onLogout }) => (
         <button className={styles.back}></button>
       </Link>
       <h1 className={styles.title}>{title}</h1>
-      <span className={styles.member}>
-        <span className={styles.symbol}>👤</span>
-        {member}
-      </span>
+      {member && (
+        <span className={styles.member}>
+          <span className={styles.symbol}>👤</span>
+          {member}
+        </span>
+      )}
     </div>
     {onLogout && (
       <button className={styles.logout} onClick={onLogout}>

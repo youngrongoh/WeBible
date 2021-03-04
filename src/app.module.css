@@ -1,3 +1,4 @@
+@value makerIvory, makerDarkGrayOp from '/src/common/colors.css';
 @value narrowQuery from '/src/common/size.css';
 
 .app {
@@ -7,10 +8,40 @@
   overflow: hidden;
 }
 
+.loading {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background-color: makerDarkGrayOp;
+  z-index: 1;
+}
+
+.loading:before {
+  content: '';
+  width: 2em;
+  height: 2em;
+  border: 5px solid makerIvory;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spin 500ms linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 @media screen and (max-width: narrowQuery) {
   .app {
     flex-direction: column;
-    overflow-y: auto;
-    height: unset;
+    /* overflow-y: auto; */
+    /* height: unset; */
   }
 }
