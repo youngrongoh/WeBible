@@ -85,7 +85,7 @@ function NestedRoute({ authService, database, imageUploader }) {
   return (
     <>
       {loading && <div className={styles.loading}></div>}
-      {sidebar && <Sidebar profile={profile} groups={groups} />}
+      {sidebar && <Sidebar profile={profile} groups={groups} path={_path} />}
       <Route path={`${_path}/profile`}>
         <ProfileEditForm
           authService={authService}
@@ -111,7 +111,7 @@ function NestedRoute({ authService, database, imageUploader }) {
           changeLoadState={changeLoadState}
         />
       </Route>
-      <Route path={path} exact>
+      <Route path={['/', '/modal']} exact>
         <Dashboard
           authService={authService}
           database={database}

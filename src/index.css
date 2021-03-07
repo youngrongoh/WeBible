@@ -33,3 +33,9 @@ a {
   text-decoration: none;
   color: inherit;
 }
+
+input {
+  outline: none;
+  border: none;
+  background-color: transparent;
+}

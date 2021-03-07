@@ -106,7 +106,14 @@ const ProfileEditForm = ({
 
   return (
     <main className={styles.editor}>
-      <Header title="프로필 변경" onLogout={onLogout} />
+      <Header
+        Button={({ className }) => (
+          <button className={className} onClick={onLogout}>
+            로그아웃
+          </button>
+        )}
+        title="프로필 변경"
+      />
       <div className={styles.container}>
         <form className={styles.form}>
           <div className={styles.left}>

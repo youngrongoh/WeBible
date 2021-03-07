@@ -1,4 +1,4 @@
-@value makerDarkGray, makerGray, makerNavy, makerGradient from '/src/common/colors.css';
+@value makerWhite, makerDarkGray, makerGray, makerNavy, makerGradient from '/src/common/colors.css';
 
 .header {
   position: relative;
@@ -40,6 +40,10 @@
   opacity: 1;
 }
 
+.dark .back {
+  border-color: makerWhite;
+}
+
 .title {
   margin: 0;
 }
@@ -58,9 +62,14 @@
   margin-left: 0.5em;
 }
 
-.logout {
+.button {
   background-color: makerGray;
   padding: 0.5em 0.8em;
   font-weight: bold;
   border-radius: 0.3em;
+  transition: opacity 300ms ease;
+}
+
+.button:hover {
+  opacity: 0.8;
 }
