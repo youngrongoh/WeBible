@@ -52,7 +52,6 @@ function NestedRoute({ authService, database, imageUploader }) {
       users: ['Bob', 'Jane'],
     },
   });
-  const [currentGroup, setCurrentGroup] = useState(null);
   const [loading, setLoading] = useState(true);
   const [sidebar, setSidebar] = useState(true);
   const { path } = useRouteMatch();
@@ -67,10 +66,6 @@ function NestedRoute({ authService, database, imageUploader }) {
   }, []);
   const changeLoadState = useCallback((loadState) => {
     setLoading(loadState);
-  }, []);
-
-  const getGroupId = useCallback((groupId) => {
-    setCurrentGroup(groupId);
   }, []);
 
   const changeSidebarShow = useCallback((visible) => {
@@ -98,20 +93,15 @@ function NestedRoute({ authService, database, imageUploader }) {
           changeSidebarShow={changeSidebarShow}
         />
       </Route>
-      <Route path={`${_path}/group/:groupId`}>
-        <Dashboard
-          authService={authService}
-          database={database}
-          bibleList={bibleList}
-          records={records}
-          group={allGroups[currentGroup]}
-          getGroupId={getGroupId}
-          updateRecords={updateRecords}
-          editProfile={editProfile}
-          changeLoadState={changeLoadState}
-        />
-      </Route>
-      <Route path={['/', '/modal']} exact>
+      <Route
+        path={[
+          '/',
+          '/modal',
+          `${_path}/group/:groupId`,
+          `${_path}/group/:groupId/modal`,
+        ]}
+        exact
+      >
         <Dashboard
           authService={authService}
           database={database}

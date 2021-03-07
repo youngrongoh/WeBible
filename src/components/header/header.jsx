@@ -1,13 +1,11 @@
 import React, { memo } from 'react';
-import { useHistory } from 'react-router-dom';
 import styles from './header.module.css';
 
-const Header = ({ title, member, onLogout }) => {
-  const history = useHistory();
+const Header = ({ title, member, onGoBack, onLogout }) => {
   return (
     <header className={styles.header}>
       <div className={styles.headerLeft}>
-        <button className={styles.back} onClick={history.goBack}></button>
+        <button className={styles.back} onClick={onGoBack}></button>
         <h1 className={styles.title}>{title}</h1>
         {member && (
           <span className={styles.member}>

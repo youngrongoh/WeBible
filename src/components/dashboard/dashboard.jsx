@@ -9,16 +9,16 @@ const Dashboard = ({
   database,
   bibleList,
   records,
-  group,
-  getGroupId,
   updateRecords,
   editProfile,
   changeLoadState,
 }) => {
+  const { groupId } = useParams();
+  const history = useHistory();
+
   const [userId, setUserId] = useState();
   const [users, setUsers] = useState({});
-  const history = useHistory();
-  let { groupId } = useParams();
+  const [groupName, setGroupName] = useState(null);
 
   // Return an array removed a chapter of the clicked or contain it.
   const getChapters = (bible, chapter, target) => {
@@ -58,10 +58,11 @@ const Dashboard = ({
     const stopSync = database.syncUserData('all', userId, (data) => {
       editProfile(data.profile);
       updateRecords(data.records);
+      setGroupName(data.groups[groupId]);
       changeLoadState(false);
     });
     return () => stopSync();
-  }, [database, userId, updateRecords, editProfile, changeLoadState]);
+  }, [database, userId, groupId, updateRecords, editProfile, changeLoadState]);
 
   useEffect(() => {
     authService.onAuthChanged((user) => {
@@ -75,7 +76,6 @@ const Dashboard = ({
 
   // Sync users data of a group when come in the group dashboard.
   useEffect(() => {
-    getGroupId && getGroupId(groupId);
     if (groupId) {
       changeLoadState(true);
       const stopSync = database.syncGroupUsers(groupId, (users) => {
@@ -84,32 +84,34 @@ const Dashboard = ({
       });
       return () => stopSync();
     }
-  }, [database, groupId, getGroupId, changeLoadState]);
+  }, [database, groupId, changeLoadState]);
 
   return (
     <>
       <main className={styles.dashboard}>
-        {group && (
-          <Header title={`${group.name}`} member={group.users.length} />
+        {groupName && (
+          <Header
+            title={groupName}
+            member={Object.keys(users).length}
+            onGoBack={() => history.push('/')}
+          />
         )}
         <div className={styles.container}>
           <RecordSheet
             bibleList={bibleList}
             records={records}
-            flex={group ? false : true}
+            flex={groupId ? false : true}
             updateChapter={updateChapter}
           />
-          {group &&
-            group.users.map(
-              (userId) =>
-                users.hasOwnProperty(userId) && (
+          {Object.keys(users).length !== 0 &&
+            Object.keys(users).map(
+              (id) =>
+                id !== userId && (
                   <RecordSheet
-                    key={userId}
-                    userId={userId}
+                    key={id}
                     bibleList={bibleList}
-                    profile={users[userId].profile}
-                    records={users[userId].records}
-                    flex={group ? false : true}
+                    profile={users[id].profile}
+                    records={users[id].records}
                     updateChapter={updateChapter}
                   />
                 )

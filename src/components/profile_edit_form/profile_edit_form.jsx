@@ -113,6 +113,7 @@ const ProfileEditForm = ({
           </button>
         )}
         title="프로필 변경"
+        onGoBack={history.goBack}
       />
       <div className={styles.container}>
         <form className={styles.form}>

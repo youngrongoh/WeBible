@@ -4,14 +4,7 @@ import ProfileButton from '../profile_button/profile_button';
 import BibleItem from '../bible_item/bible_item';
 import styles from './record_sheet.module.css';
 
-const RecordSheet = ({
-  userId,
-  bibleList,
-  profile,
-  records,
-  flex,
-  updateChapter,
-}) => {
+const RecordSheet = ({ bibleList, profile, records, flex, updateChapter }) => {
   const renderItems = () =>
     Object.keys(bibleList).map((key) => {
       const bible = bibleList[key];
@@ -21,7 +14,7 @@ const RecordSheet = ({
           key={key}
           bible={bible}
           checkedChapters={checkedChapters}
-          editable={userId ? false : true}
+          editable={profile ? false : true}
           updateChapter={updateChapter}
         />
       );
@@ -29,13 +22,13 @@ const RecordSheet = ({
 
   return (
     <section className={getStyle(flex, 'sheet')}>
-      {userId && (
+      {profile && (
         <div className={styles.profile}>
           <Avatar url={profile.imageURL} />
           <ProfileButton name={profile.name} />
         </div>
       )}
-      <div className={getStyle(!userId, 'container')}>
+      <div className={getStyle(!profile, 'container')}>
         <ul className={styles.list}>{renderItems()}</ul>
       </div>
     </section>
