@@ -16,7 +16,7 @@ const Dashboard = ({
   const { groupId } = useParams();
   const history = useHistory();
 
-  const [userId, setUserId] = useState();
+  const [userId, setUserId] = useState(null);
   const [users, setUsers] = useState({});
   const [groupName, setGroupName] = useState(null);
 

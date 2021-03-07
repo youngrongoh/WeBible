@@ -4,7 +4,7 @@ import GroupModal from '../group_modal/group_modal';
 import Profile from '../profile/profile';
 import styles from './sidebar.module.css';
 
-const Sidebar = ({ profile, groups }) => {
+const Sidebar = ({ database, profile, groups }) => {
   const history = useHistory();
   const { pathname } = useLocation();
   const path = pathname.replace('/modal', '');
@@ -12,7 +12,7 @@ const Sidebar = ({ profile, groups }) => {
   return (
     <>
       <Route path={`${_path}/modal`}>
-        <GroupModal />
+        <GroupModal database={database} />
       </Route>
       <aside className={styles.sidebar}>
         <div className={styles.profile}>

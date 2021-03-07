@@ -25,6 +25,18 @@ class Database {
     });
     return () => conditionRef.off();
   }
+
+  syncGroups(keyword, onUpdate) {
+    const ref = firebaseApp.database().ref('groups');
+    const conditionRef = ref
+      .orderByChild('name')
+      .startAt(keyword)
+      .limitToFirst(10);
+    conditionRef.once('value', (snapshot) => {
+      const value = snapshot.val();
+      onUpdate && onUpdate(value);
+    });
+  }
 }
 
 function checkCategory(value) {

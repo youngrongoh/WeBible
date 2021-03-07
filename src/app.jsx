@@ -80,7 +80,14 @@ function NestedRoute({ authService, database, imageUploader }) {
   return (
     <>
       {loading && <div className={styles.loading}></div>}
-      {sidebar && <Sidebar profile={profile} groups={groups} path={_path} />}
+      {sidebar && (
+        <Sidebar
+          database={database}
+          profile={profile}
+          groups={groups}
+          path={_path}
+        />
+      )}
       <Route path={`${_path}/profile`}>
         <ProfileEditForm
           authService={authService}
