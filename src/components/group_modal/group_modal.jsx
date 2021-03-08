@@ -3,7 +3,7 @@ import styles from './group_modal.module.css';
 import { Link } from 'react-router-dom';
 import GroupAddForm from '../group_add_form/group_add_form';
 
-const GroupModal = ({ database, changeModalStatus }) => {
+const GroupModal = ({ database, userId, groups, changeModalStatus }) => {
   const [response, setResponse] = useState(null);
   const [result, setResult] = useState(null);
   const [value, setValue] = useState('');
@@ -80,6 +80,7 @@ const GroupModal = ({ database, changeModalStatus }) => {
       {addForm && (
         <GroupAddForm
           database={database}
+          userId={userId}
           changeAddStatus={changeAddStatus}
           changeModalStatus={changeModalStatus}
         />

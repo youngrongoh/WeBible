@@ -107,7 +107,11 @@ function NestedRoute({ authService, database, imageUploader }) {
     <>
       {loading && <div className={styles.loading}></div>}
       {modal && (
-        <GroupModal database={database} changeModalStatus={changeModalStatus} />
+        <GroupModal
+          database={database}
+          userId={userId}
+          changeModalStatus={changeModalStatus}
+        />
       )}
       {sidebar && (
         <Sidebar

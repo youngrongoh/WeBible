@@ -6,7 +6,11 @@ class Database {
     firebaseApp.database().ref(`users/${userId}/${validCategory}`).set(data);
   }
 
-  saveGroup(groupId, data, category) {
+  saveUserGroup(userId, groupId, name) {
+    firebaseApp.database().ref(`users/${userId}/groups/${groupId}`).set(name);
+  }
+
+  saveGroups(groupId, data, category) {
     firebaseApp
       .database()
       .ref(`groups/${groupId}/${category || ''}`)

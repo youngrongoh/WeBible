@@ -1,7 +1,12 @@
 import React, { useRef, useState } from 'react';
 import styles from './group_add_form.module.css';
 
-const GroupAddForm = ({ database, changeAddStatus, changeModalStatus }) => {
+const GroupAddForm = ({
+  database,
+  userId,
+  changeAddStatus,
+  changeModalStatus,
+}) => {
   const [value, setValue] = useState('');
   const [reset, setReset] = useState(false);
   const inputRef = useRef();
@@ -17,6 +22,13 @@ const GroupAddForm = ({ database, changeAddStatus, changeModalStatus }) => {
     }
   };
 
+  const onKeyPress = (event) => {
+    if (event.key !== 'Enter') {
+      return;
+    }
+    event.preventDefault();
+  };
+
   const onReset = (event) => {
     event.preventDefault();
     setValue('');
@@ -27,14 +39,15 @@ const GroupAddForm = ({ database, changeAddStatus, changeModalStatus }) => {
     event.preventDefault();
     if (!value || value === ' ') return;
 
-    const id = Date.now().toString(32);
+    const groupId = Date.now().toString(32);
     const group = {
       name: value,
-      admin: 'userId',
-      users: ['userId'],
+      admin: userId,
+      users: [userId],
     };
 
-    database.saveGroup(id, group);
+    database.saveGroups(groupId, group);
+    database.saveUserGroup(userId, groupId, value);
     changeAddStatus(false);
     changeModalStatus(false);
   };
@@ -73,6 +86,7 @@ const GroupAddForm = ({ database, changeAddStatus, changeModalStatus }) => {
                 name="name"
                 id="name"
                 value={value}
+                onKeyPress={onKeyPress}
                 onChange={onChange}
               />
               {reset && (
