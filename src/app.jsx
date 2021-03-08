@@ -11,6 +11,7 @@ import Dashboard from './components/dashboard/dashboard';
 import Login from './components/login/login';
 import ProfileEditForm from './components/profile_edit_form/profile_edit_form';
 import * as BIBLE_LIST from './data/bible_list.json';
+import GroupModal from './components/group_modal/group_modal';
 
 const bibleList = BIBLE_LIST.default;
 
@@ -54,6 +55,7 @@ function NestedRoute({ authService, database, imageUploader }) {
   });
   const [loading, setLoading] = useState(true);
   const [sidebar, setSidebar] = useState(true);
+  const [modal, setModal] = useState(false);
   const { path } = useRouteMatch();
   const _path = path === '/' ? '' : path;
 
@@ -73,6 +75,10 @@ function NestedRoute({ authService, database, imageUploader }) {
     return visible;
   }, []);
 
+  const changeModalStatus = (status) => {
+    setModal(status);
+  };
+
   const onLogout = () => {
     authService.logout();
   };
@@ -80,12 +86,14 @@ function NestedRoute({ authService, database, imageUploader }) {
   return (
     <>
       {loading && <div className={styles.loading}></div>}
+      {modal && (
+        <GroupModal database={database} changeModalStatus={changeModalStatus} />
+      )}
       {sidebar && (
         <Sidebar
-          database={database}
           profile={profile}
           groups={groups}
-          path={_path}
+          changeModalStatus={changeModalStatus}
         />
       )}
       <Route path={`${_path}/profile`}>
@@ -100,15 +108,7 @@ function NestedRoute({ authService, database, imageUploader }) {
           changeSidebarShow={changeSidebarShow}
         />
       </Route>
-      <Route
-        path={[
-          '/',
-          '/modal',
-          `${_path}/group/:groupId`,
-          `${_path}/group/:groupId/modal`,
-        ]}
-        exact
-      >
+      <Route path={['/', `${_path}/group/:groupId`]} exact>
         <Dashboard
           authService={authService}
           database={database}

@@ -1,19 +1,11 @@
 import React, { memo } from 'react';
-import { Link, Route, useHistory, useLocation } from 'react-router-dom';
-import GroupModal from '../group_modal/group_modal';
+import { Link } from 'react-router-dom';
 import Profile from '../profile/profile';
 import styles from './sidebar.module.css';
 
-const Sidebar = ({ database, profile, groups }) => {
-  const history = useHistory();
-  const { pathname } = useLocation();
-  const path = pathname.replace('/modal', '');
-  const _path = path === '/' ? '' : path;
+const Sidebar = ({ profile, groups, changeModalStatus }) => {
   return (
     <>
-      <Route path={`${_path}/modal`}>
-        <GroupModal database={database} />
-      </Route>
       <aside className={styles.sidebar}>
         <div className={styles.profile}>
           <Profile profile={profile} />
@@ -42,7 +34,7 @@ const Sidebar = ({ database, profile, groups }) => {
             <li className={styles.item}>
               <button
                 className={styles.button}
-                onClick={() => history.push(`${_path}/modal`)}
+                onClick={() => changeModalStatus(true)}
               >
                 <span className={styles.symbol}>🔍</span> 찾아보기
               </button>

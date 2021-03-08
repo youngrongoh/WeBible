@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import styles from './group_modal.module.css';
 import { Link, useHistory } from 'react-router-dom';
 
-const GroupModal = ({ database }) => {
+const GroupModal = ({ database, changeModalStatus }) => {
   const history = useHistory();
   const [response, setResponse] = useState(null);
   const [result, setResult] = useState(null);
@@ -18,7 +18,7 @@ const GroupModal = ({ database }) => {
     if (!event.target.matches(`.${styles.modal}`)) {
       return;
     }
-    history.goBack();
+    changeModalStatus(false);
   };
 
   const onReset = (event) => {
@@ -105,7 +105,11 @@ const GroupModal = ({ database }) => {
           <ul className={styles.list}>
             {Object.keys(result).map((id) => (
               <li key={id} className={styles.item}>
-                <Link to={`/group/${id}`} className={styles.link}>
+                <Link
+                  to={`/group/${id}`}
+                  className={styles.link}
+                  onClick={() => changeModalStatus(false)}
+                >
                   <h1 className={styles.title}>{result[id].name}</h1>
                   <span className={styles.member}>
                     <span className={styles.symbol}>👤</span>
