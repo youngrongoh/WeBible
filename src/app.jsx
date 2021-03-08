@@ -1,9 +1,10 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   useRouteMatch,
+  useHistory,
 } from 'react-router-dom';
 import styles from './app.module.css';
 import Sidebar from './components/sidebar/sidebar';
@@ -37,25 +38,18 @@ function App({ authService, database, imageUploader }) {
 }
 
 function NestedRoute({ authService, database, imageUploader }) {
+  // Personal User State
+  const [userId, setUserId] = useState(null);
   const [records, setRecords] = useState({});
   const [profile, setProfile] = useState({});
-  const [groups, setGroups] = useState({
-    kj34h53kj6: 'Happy friends',
-    jk45h23k: 'Lovely church',
-  });
-  const [allGroups, setAllGroups] = useState({
-    kj34h53kj6: {
-      name: 'Happy friends',
-      users: ['NIzO64MSicfd8xKNMFC3NYHmqFn1'],
-    },
-    jk45h23k: {
-      name: 'Lovely church',
-      users: ['Bob', 'Jane'],
-    },
-  });
+  const [groups, setGroups] = useState({});
+
+  // UI display status
   const [loading, setLoading] = useState(true);
   const [sidebar, setSidebar] = useState(true);
   const [modal, setModal] = useState(false);
+
+  const history = useHistory();
   const { path } = useRouteMatch();
   const _path = path === '/' ? '' : path;
 
@@ -83,6 +77,32 @@ function NestedRoute({ authService, database, imageUploader }) {
     authService.logout();
   };
 
+  // Sync user data data when the user is logged in.
+  useEffect(() => {
+    if (!userId) {
+      return;
+    }
+    setLoading(true);
+    const stopSync = database.syncUserData('all', userId, (data) => {
+      setProfile(data.profile);
+      setRecords(data.records);
+      setGroups(data.groups);
+      setLoading(false);
+    });
+    return () => stopSync();
+  }, [database, userId]);
+
+  // Determine whether redirect to login according to auth state when auth change.
+  useEffect(() => {
+    authService.onAuthChanged((user) => {
+      if (!user) {
+        history.push('/login');
+        return;
+      }
+      setUserId(user.uid);
+    });
+  }, [authService, history, userId]);
+
   return (
     <>
       {loading && <div className={styles.loading}></div>}
@@ -101,6 +121,7 @@ function NestedRoute({ authService, database, imageUploader }) {
           authService={authService}
           database={database}
           imageUploader={imageUploader}
+          userId={userId}
           profile={profile}
           onLogout={onLogout}
           editProfile={editProfile}
@@ -110,12 +131,12 @@ function NestedRoute({ authService, database, imageUploader }) {
       </Route>
       <Route path={['/', `${_path}/group/:groupId`]} exact>
         <Dashboard
-          authService={authService}
           database={database}
           bibleList={bibleList}
+          userId={userId}
           records={records}
+          groups={groups}
           updateRecords={updateRecords}
-          editProfile={editProfile}
           changeLoadState={changeLoadState}
         />
       </Route>

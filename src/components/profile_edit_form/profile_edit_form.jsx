@@ -4,17 +4,16 @@ import Header from '../header/header';
 import styles from './profile_edit_form.module.css';
 
 const ProfileEditForm = ({
-  authService,
   database,
   imageUploader,
+  userId,
   profile,
   onLogout,
   editProfile,
   changeLoadState,
   changeSidebarShow,
 }) => {
-  const [preview, setPreview] = useState({ ...profile });
-  const [userId, setUserId] = useState();
+  const [preview, setPreview] = useState({});
   const [image, setImage] = useState();
   const history = useHistory();
 
@@ -36,6 +35,7 @@ const ProfileEditForm = ({
   const onReset = (event) => {
     event.preventDefault();
     setPreview(profile);
+    setImage(profile.imageURL);
   };
 
   const onEditClick = async (event) => {
@@ -73,36 +73,15 @@ const ProfileEditForm = ({
     setImage(file);
   };
 
-  // Sync profile data if userId be present.
-  useEffect(() => {
-    if (!userId) {
-      return;
-    }
-    changeLoadState(true);
-    const stopSync = database.syncUserData('profile', userId, (profile) => {
-      editProfile(profile);
-      setPreview(profile);
-      changeLoadState(false);
-    });
-    return () => stopSync();
-  }, [userId, database, editProfile, changeLoadState]);
-
-  // Determine whether redirect to login according to auth state when auth change.
-  useEffect(() => {
-    authService.onAuthChanged((user) => {
-      if (user == null) {
-        history.push('/login');
-        return;
-      }
-      setUserId(user.uid);
-    });
-  });
-
   // Change the show state of sidebar in accordance whether mount or unmount this.
   useEffect(() => {
     changeSidebarShow(false);
     return () => changeSidebarShow(true);
   }, [changeSidebarShow]);
+
+  useEffect(() => {
+    setPreview(profile);
+  }, [profile]);
 
   return (
     <main className={styles.editor}>

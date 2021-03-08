@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Avatar from '../avatar/avatar';
 import ProfileButton from '../profile_button/profile_button';
 import BibleItem from '../bible_item/bible_item';

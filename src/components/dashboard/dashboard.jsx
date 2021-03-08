@@ -5,20 +5,17 @@ import { useHistory, useParams } from 'react-router-dom';
 import Header from '../header/header';
 
 const Dashboard = ({
-  authService,
   database,
   bibleList,
+  userId,
   records,
+  groups,
   updateRecords,
-  editProfile,
   changeLoadState,
 }) => {
   const { groupId } = useParams();
   const history = useHistory();
-
-  const [userId, setUserId] = useState(null);
   const [users, setUsers] = useState({});
-  const [groupName, setGroupName] = useState(null);
 
   // Return an array removed a chapter of the clicked or contain it.
   const getChapters = (bible, chapter, target) => {
@@ -49,31 +46,6 @@ const Dashboard = ({
     });
   };
 
-  // Sync user data data when the user is logged in.
-  useEffect(() => {
-    if (!userId) {
-      return;
-    }
-    changeLoadState(true);
-    const stopSync = database.syncUserData('all', userId, (data) => {
-      editProfile(data.profile);
-      updateRecords(data.records);
-      setGroupName(data.groups[groupId]);
-      changeLoadState(false);
-    });
-    return () => stopSync();
-  }, [database, userId, groupId, updateRecords, editProfile, changeLoadState]);
-
-  useEffect(() => {
-    authService.onAuthChanged((user) => {
-      if (!user) {
-        history.push('/login');
-        return;
-      }
-      setUserId(user.uid);
-    });
-  }, [authService, history, userId]);
-
   // Sync users data of a group when come in the group dashboard.
   useEffect(() => {
     if (groupId) {
@@ -89,9 +61,9 @@ const Dashboard = ({
   return (
     <>
       <main className={styles.dashboard}>
-        {groupName && (
+        {groupId && (
           <Header
-            title={groupName}
+            title={groups[groupId]}
             member={Object.keys(users).length}
             onGoBack={() => history.push('/')}
           />
