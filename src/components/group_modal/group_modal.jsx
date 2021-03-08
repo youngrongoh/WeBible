@@ -1,23 +1,25 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styles from './group_modal.module.css';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import GroupAddForm from '../group_add_form/group_add_form';
 
 const GroupModal = ({ database, changeModalStatus }) => {
-  const history = useHistory();
   const [response, setResponse] = useState(null);
   const [result, setResult] = useState(null);
   const [value, setValue] = useState('');
+  const [addForm, setAddForm] = useState(false);
   const formRef = useRef();
   const inputRef = useRef();
 
-  const onAddClick = () => {
-    console.log('add');
+  const changeAddStatus = (bool) => {
+    setAddForm(bool);
   };
 
   const onBGClick = (event) => {
     if (!event.target.matches(`.${styles.modal}`)) {
       return;
     }
+    setAddForm(false);
     changeModalStatus(false);
   };
 
@@ -75,9 +77,16 @@ const GroupModal = ({ database, changeModalStatus }) => {
 
   return (
     <section className={styles.modal} onClick={onBGClick}>
+      {addForm && (
+        <GroupAddForm
+          database={database}
+          changeAddStatus={changeAddStatus}
+          changeModalStatus={changeModalStatus}
+        />
+      )}
       <div className={styles.container}>
         <header className={styles.header}>
-          <button className={styles.add} onClick={onAddClick}>
+          <button className={styles.add} onClick={() => changeAddStatus(true)}>
             +
           </button>
           <form ref={formRef} className={styles.search}>

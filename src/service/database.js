@@ -6,6 +6,13 @@ class Database {
     firebaseApp.database().ref(`users/${userId}/${validCategory}`).set(data);
   }
 
+  saveGroup(groupId, data, category) {
+    firebaseApp
+      .database()
+      .ref(`groups/${groupId}/${category || ''}`)
+      .set(data);
+  }
+
   syncUserData(category, userId, onUpdate) {
     const validCategory = checkCategory(category);
     const ref = firebaseApp.database().ref(`users/${userId}/${validCategory}`);

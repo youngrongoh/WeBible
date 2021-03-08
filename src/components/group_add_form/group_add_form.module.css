@@ -1,0 +1,110 @@
+@value makerShadow, makerIvory, makerGray, makerWhite, makerNavy from '/src/common/colors.css';
+
+.add {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.container {
+  position: absolute;
+  top: 30%;
+  left: 0;
+  right: 0;
+  width: 100%;
+  max-width: 25em;
+  border-radius: 0.3em;
+  margin: 0 auto;
+  box-shadow: makerShadow;
+  overflow: hidden;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5em;
+  background-color: makerNavy;
+  color: makerWhite;
+}
+
+.title {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 1em;
+}
+
+.back {
+  width: 1.2em;
+  height: 1.2em;
+  border: solid makerGray;
+  border-top: 0.4em;
+  border-right: 0.4em;
+  border-radius: 0.2em;
+  transform: rotate(45deg);
+  opacity: 0.5;
+  transition: opacity 300ms ease;
+}
+
+.back:hover {
+  opacity: 1;
+}
+
+.submit {
+  background-color: makerGray;
+  font-weight: bold;
+  color: makerNavy;
+  padding: 0.5em 0.8em;
+  border-radius: 0.3em;
+  transition: 300ms ease;
+}
+
+.submit:hover {
+  background-color: makerWhite;
+  opacity: 0.95;
+}
+
+.form {
+  background-color: makerIvory;
+  padding: 1em 1.2em 2em;
+}
+
+.name {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.inputBox {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  font-size: 1.2rem;
+  border: 1px solid makerGray;
+  border-radius: 0.3em;
+  background-color: makerWhite;
+  padding: 0.5em 0.8em;
+  margin-top: 0.5em;
+}
+
+.input {
+  width: 100%;
+  font-size: 1em;
+  margin-right: 0.8em;
+}
+
+.reset {
+  background-color: makerGray;
+  color: makerWhite;
+  font-size: 0.8em;
+  line-height: 0.5em;
+  padding: 0.4em 0.5em 0.6em 0.5em;
+  border-radius: 50%;
+  opacity: 0.5;
+  transition: opacity 300ms ease;
+}
+
+.reset:hover {
+  opacity: 0.8;
+}
