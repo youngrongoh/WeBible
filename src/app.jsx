@@ -47,7 +47,7 @@ function NestedRoute({ authService, database, imageUploader }) {
   // UI display status
   const [loading, setLoading] = useState(true);
   const [sidebar, setSidebar] = useState(true);
-  const [modal, setModal] = useState(false);
+  const [modal, setModal] = useState(null);
 
   const history = useHistory();
   const { path } = useRouteMatch();
@@ -69,8 +69,8 @@ function NestedRoute({ authService, database, imageUploader }) {
     return visible;
   }, []);
 
-  const changeModalStatus = (status) => {
-    setModal(status);
+  const changeModalStatus = (modal) => {
+    setModal(modal);
   };
 
   const onLogout = () => {
@@ -109,7 +109,9 @@ function NestedRoute({ authService, database, imageUploader }) {
       {modal && (
         <GroupModal
           database={database}
+          modal={modal}
           userId={userId}
+          group
           changeModalStatus={changeModalStatus}
         />
       )}
@@ -142,6 +144,7 @@ function NestedRoute({ authService, database, imageUploader }) {
           groups={groups}
           updateRecords={updateRecords}
           changeLoadState={changeLoadState}
+          changeModalStatus={changeModalStatus}
         />
       </Route>
     </>

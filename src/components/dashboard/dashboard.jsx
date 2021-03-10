@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import RecordSheet from '../record_sheet/record_sheet';
 import styles from './dashboard.module.css';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 import Header from '../header/header';
 
 const Dashboard = ({
@@ -12,9 +12,11 @@ const Dashboard = ({
   groups,
   updateRecords,
   changeLoadState,
+  changeModalStatus,
 }) => {
   const { groupId } = useParams();
   const history = useHistory();
+  const location = useLocation();
   const [users, setUsers] = useState({});
 
   // Return an array removed a chapter of the clicked or contain it.
@@ -63,6 +65,17 @@ const Dashboard = ({
       <main className={styles.dashboard}>
         {groupId && (
           <Header
+            Button={({ className }) => (
+              <button
+                className={className}
+                onClick={() => {
+                  changeModalStatus('setting');
+                  location.state = { groupName: groups[groupId], groupId };
+                }}
+              >
+                그룹 설정
+              </button>
+            )}
             title={groups[groupId]}
             member={Object.keys(users).length}
             onGoBack={() => history.push('/')}

@@ -34,7 +34,7 @@ const Sidebar = ({ profile, groups, changeModalStatus }) => {
             <li className={styles.item}>
               <button
                 className={styles.button}
-                onClick={() => changeModalStatus(true)}
+                onClick={() => changeModalStatus('search')}
               >
                 <span className={styles.symbol}>🔍</span> 찾아보기
               </button>

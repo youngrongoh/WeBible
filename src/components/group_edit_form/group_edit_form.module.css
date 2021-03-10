@@ -1,4 +1,4 @@
-@value makerShadow, makerIvory, makerGray, makerWhite, makerNavy from '/src/common/colors.css';
+@value makerRed, makerShadow, makerIvory, makerGray, makerWhite, makerNavy from '/src/common/colors.css';
 
 .container {
   position: absolute;
@@ -44,23 +44,28 @@
   opacity: 1;
 }
 
-.submit {
+.button {
   background-color: makerGray;
   font-weight: bold;
   color: makerNavy;
   padding: 0.5em 0.8em;
   border-radius: 0.3em;
+  margin-left: 0.5em;
   transition: 300ms ease;
 }
 
-.submit:hover {
+.button:hover {
   background-color: makerWhite;
   opacity: 0.95;
 }
 
-.form {
+.body {
   background-color: makerIvory;
-  padding: 1em 1.2em 2em;
+  padding: 1em 1.2em 1em;
+}
+
+.form {
+  margin-bottom: 2em;
 }
 
 .name {
@@ -100,4 +105,17 @@
 
 .reset:hover {
   opacity: 0.8;
+}
+
+.message {
+  color: makerRed;
+  font-size: 0.7em;
+  text-align: right;
+}
+
+.close {
+  font-size: 1em;
+  font-weight: bold;
+  text-decoration: underline;
+  margin-left: 0.3em;
 }

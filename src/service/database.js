@@ -27,6 +27,14 @@ class Database {
     return () => ref.off();
   }
 
+  syncGroupData(groupId, category, onUpdate) {
+    const ref = firebaseApp.database().ref(`groups/${groupId}/${category}/`);
+    ref.on('value', (snapshot) => {
+      const value = snapshot.val();
+      onUpdate && onUpdate(value);
+    });
+  }
+
   syncGroupUsers(groupId, onUpdate) {
     const ref = firebaseApp.database().ref('users');
     const conditionRef = ref.orderByChild('groups').startAt(groupId);

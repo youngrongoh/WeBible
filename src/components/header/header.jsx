@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import styles from './header.module.css';
 
-const Header = ({ title, member, onGoBack, onLogout }) => {
+const Header = ({ Button, title, member, onGoBack }) => {
   return (
     <header className={styles.header}>
       <div className={styles.headerLeft}>
@@ -14,11 +14,7 @@ const Header = ({ title, member, onGoBack, onLogout }) => {
           </span>
         )}
       </div>
-      {onLogout && (
-        <button className={styles.logout} onClick={onLogout}>
-          로그아웃
-        </button>
-      )}
+      {Button && <Button className={styles.button} />}
     </header>
   );
 };
