@@ -17,6 +17,31 @@ class Database {
       .set(data);
   }
 
+  removeUserGroup(userId, groupId) {
+    firebaseApp.database().ref(`users/${userId}/groups/${groupId}`).remove();
+  }
+
+  removeGroupUser(userId, groupId) {
+    const ref = firebaseApp.database().ref(`groups/${groupId}/users`);
+    ref.once('value', (snapshot) => {
+      const ids = snapshot.val();
+      const index = ids.findIndex((id) => id === userId);
+      firebaseApp.database().ref(`groups/${groupId}/users/${index}`).remove();
+    });
+  }
+
+  async removeGroup(groupId) {
+    const ref = firebaseApp.database().ref(`groups/${groupId}`);
+    const usersRef = ref.child('users');
+    await usersRef.once('value', (snapshot) => {
+      const ids = snapshot.val();
+      ids.forEach((id) => {
+        firebaseApp.database().ref(`users/${id}/groups/${groupId}`).remove();
+      });
+    });
+    ref.remove();
+  }
+
   syncUserData(category, userId, onUpdate) {
     const validCategory = checkCategory(category);
     const ref = firebaseApp.database().ref(`users/${userId}/${validCategory}`);
@@ -36,13 +61,21 @@ class Database {
   }
 
   syncGroupUsers(groupId, onUpdate) {
-    const ref = firebaseApp.database().ref('users');
-    const conditionRef = ref.orderByChild('groups').startAt(groupId);
-    conditionRef.on('value', (snapshot) => {
-      const value = snapshot.val();
-      onUpdate && onUpdate(value);
+    const ref = firebaseApp.database().ref(`groups/${groupId}/users`);
+    ref.on('value', async (snapshot) => {
+      const ids = snapshot.val();
+      const promiseArr = ids.map(async (id) => {
+        const ref = firebaseApp.database().ref(`users/${id}`);
+        return await ref.once('value').then((snapshot) => snapshot.val());
+      });
+      const usersArr = await Promise.all(promiseArr);
+      const users = usersArr.reduce((acc, user, i) => {
+        acc[ids[i]] = user;
+        return acc;
+      }, {});
+      onUpdate && onUpdate(users);
     });
-    return () => conditionRef.off();
+    return () => ref.off();
   }
 
   syncGroups(keyword, onUpdate) {

@@ -3,6 +3,7 @@ import styles from './group_modal.module.css';
 import { Link } from 'react-router-dom';
 import GroupAddForm from '../group_add_form/group_add_form';
 import GroupEditForm from '../group_edit_form/group_edit_form';
+import GroupDeleteForm from '../group_delete_form/group_delete_form';
 
 const GroupModal = ({ database, modal, userId, changeModalStatus }) => {
   const [response, setResponse] = useState(null);
@@ -137,6 +138,13 @@ const GroupModal = ({ database, modal, userId, changeModalStatus }) => {
       )}
       {modal === 'setting' && (
         <GroupEditForm
+          database={database}
+          userId={userId}
+          changeModalStatus={changeModalStatus}
+        />
+      )}
+      {modal === 'delete' && (
+        <GroupDeleteForm
           database={database}
           userId={userId}
           changeModalStatus={changeModalStatus}

@@ -3,9 +3,10 @@ import { useLocation } from 'react-router';
 import styles from './group_edit_form.module.css';
 
 const GroupEditForm = ({ database, userId, changeModalStatus }) => {
+  const location = useLocation();
   const {
     state: { groupName, groupId },
-  } = useLocation();
+  } = location;
   const [value, setValue] = useState(groupName);
   const [reset, setReset] = useState(groupName ? true : false);
   const [admin, setAdmin] = useState(false);
@@ -102,8 +103,17 @@ const GroupEditForm = ({ database, userId, changeModalStatus }) => {
           </form>
         )}
         <p className={styles.message}>
-          현재 그룹에 참여를 중단하고 싶다면,
-          <button className={styles.close}>여기</button>를 클릭
+          {admin ? '현재 그룹을 삭제' : '현재 그룹에 참여를 중단'}하고 싶다면,
+          <button
+            className={styles.close}
+            onClick={() => {
+              location.state = { ...location.state, admin };
+              changeModalStatus('delete');
+            }}
+          >
+            여기
+          </button>
+          를 클릭
         </p>
       </section>
     </div>
