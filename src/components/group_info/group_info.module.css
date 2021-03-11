@@ -1,0 +1,82 @@
+@value makerDarkGray, makerShadow, makerIvory, makerGray, makerWhite, makerNavy from '/src/common/colors.css';
+
+.container {
+  position: absolute;
+  top: 30%;
+  left: 0;
+  right: 0;
+  width: 100%;
+  max-width: 25em;
+  border-radius: 0.3em;
+  margin: 0 auto;
+  box-shadow: makerShadow;
+  overflow: hidden;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.2em 1.5em;
+  background-color: makerIvory;
+}
+
+.back {
+  width: 1.2em;
+  height: 1.2em;
+  border: solid makerDarkGray;
+  border-top: 0.4em;
+  border-right: 0.4em;
+  border-radius: 0.2em;
+  transform: rotate(45deg);
+  opacity: 1;
+  transition: opacity 300ms ease;
+}
+
+.back:hover {
+  opacity: 0.6;
+}
+
+.body {
+  background-color: makerIvory;
+  text-align: center;
+  padding: 1em 1.2em 1.5em;
+}
+
+.info {
+  margin-bottom: 1.2em;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.member {
+  font-size: 1em;
+  color: makerDarkGray;
+  margin-top: 0.5em;
+  margin-left: 0.5em;
+}
+
+.symbol {
+  font-size: 0.8em;
+  vertical-align: 0.08em;
+  margin-right: 0.2em;
+  opacity: 0.6;
+}
+
+.join {
+  background-color: makerGray;
+  font-weight: bold;
+  color: makerNavy;
+  padding: 1em 1.5em;
+  border-radius: 0.3em;
+  transition: 300ms ease;
+}
+
+.join:hover {
+  background-color: makerWhite;
+  opacity: 0.8;
+}

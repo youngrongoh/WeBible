@@ -1,11 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styles from './group_modal.module.css';
-import { Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import GroupAddForm from '../group_add_form/group_add_form';
 import GroupEditForm from '../group_edit_form/group_edit_form';
 import GroupDeleteForm from '../group_delete_form/group_delete_form';
+import GroupInfo from '../group_info/group_info';
 
 const GroupModal = ({ database, modal, userId, changeModalStatus }) => {
+  const location = useLocation();
   const [response, setResponse] = useState(null);
   const [result, setResult] = useState(null);
   const [value, setValue] = useState('');
@@ -69,6 +71,11 @@ const GroupModal = ({ database, modal, userId, changeModalStatus }) => {
     onSearch(event);
   };
 
+  const handleGroupClick = (group, id) => {
+    location.state = { ...location.state, group, groupId: id };
+    changeModalStatus('info');
+  };
+
   useEffect(() => {
     if (modal !== 'search') {
       return;
@@ -119,17 +126,16 @@ const GroupModal = ({ database, modal, userId, changeModalStatus }) => {
             <ul className={styles.list}>
               {Object.keys(result).map((id) => (
                 <li key={id} className={styles.item}>
-                  <Link
-                    to={`/group/${id}`}
+                  <button
                     className={styles.link}
-                    onClick={() => changeModalStatus(false)}
+                    onClick={() => handleGroupClick(result[id], id)}
                   >
                     <h1 className={styles.title}>{result[id].name}</h1>
                     <span className={styles.member}>
                       <span className={styles.symbol}>👤</span>
                       {result[id].users.length}
                     </span>
-                  </Link>
+                  </button>
                 </li>
               ))}
             </ul>
@@ -145,6 +151,13 @@ const GroupModal = ({ database, modal, userId, changeModalStatus }) => {
       )}
       {modal === 'delete' && (
         <GroupDeleteForm
+          database={database}
+          userId={userId}
+          changeModalStatus={changeModalStatus}
+        />
+      )}
+      {modal === 'info' && (
+        <GroupInfo
           database={database}
           userId={userId}
           changeModalStatus={changeModalStatus}
