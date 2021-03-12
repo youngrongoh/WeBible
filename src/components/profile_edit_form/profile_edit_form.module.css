@@ -1,4 +1,4 @@
-@value makerDarkGrayOp, makerWhite, makerIvory, makerOrange, makerGray, makerNavy, makerGradient from '/src/common/colors.css';
+@value makerRed, makerDarkGrayOp, makerWhite, makerIvory, makerOrange, makerGray, makerNavy, makerGradient from '/src/common/colors.css';
 @value narrowQuery, mediumQuery from '/src/common/size.css';
 
 .editor {
@@ -128,25 +128,18 @@
   color: makerWhite;
 }
 
-.loading {
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  background-color: makerDarkGrayOp;
-  z-index: 1;
+.message {
+  color: makerRed;
+  font-size: 0.7em;
+  text-align: right;
+  white-space: nowrap;
 }
 
-.loading:before {
-  content: '';
-  width: 2em;
-  height: 2em;
-  border: 5px solid makerIvory;
-  border-right-color: transparent;
-  border-radius: 50%;
-  animation: spin 500ms linear infinite;
+.withdraw {
+  font-size: 1em;
+  font-weight: bold;
+  text-decoration: underline;
+  margin-left: 0.3em;
 }
 
 @keyframes spin {

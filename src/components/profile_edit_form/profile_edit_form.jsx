@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import Header from '../header/header';
 import styles from './profile_edit_form.module.css';
 
@@ -12,10 +12,12 @@ const ProfileEditForm = ({
   editProfile,
   changeLoadState,
   changeSidebarShow,
+  changeModalStatus,
 }) => {
   const [preview, setPreview] = useState({});
   const [image, setImage] = useState();
   const history = useHistory();
+  const location = useLocation();
 
   const nameRef = useRef();
   const msgRef = useRef();
@@ -71,6 +73,12 @@ const ProfileEditForm = ({
     };
     reader.readAsDataURL(file);
     setImage(file);
+  };
+
+  const onWithdrawClick = (event) => {
+    event.preventDefault();
+    location.state = { name: profile.name };
+    changeModalStatus('withdraw');
   };
 
   // Change the show state of sidebar in accordance whether mount or unmount this.
@@ -165,6 +173,13 @@ const ProfileEditForm = ({
                 바꾸기
               </button>
             </div>
+            <p className={styles.message}>
+              현재 계정의 WeBible 이용을 중단하고 싶다면,
+              <button className={styles.withdraw} onClick={onWithdrawClick}>
+                여기
+              </button>
+              를 클릭
+            </p>
           </div>
         </form>
       </div>

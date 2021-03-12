@@ -29,12 +29,10 @@ const GroupDeleteForm = ({ database, userId, changeModalStatus }) => {
       alert('그룹 이름을 정확히 입력해주세요.');
       return;
     }
-    if (admin) {
-      database.removeGroup(groupId);
-    } else {
+    if (!admin) {
       database.removeUserGroup(userId, groupId);
-      database.removeGroupUser(userId, groupId);
     }
+    database.removeGroupUser(userId, groupId);
     changeModalStatus(null);
     history.push('/');
   };

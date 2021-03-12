@@ -22,24 +22,27 @@ class Database {
   }
 
   removeGroupUser(userId, groupId) {
-    const ref = firebaseApp.database().ref(`groups/${groupId}/users`);
+    const ref = firebaseApp.database().ref(`groups/${groupId}`);
     ref.once('value', (snapshot) => {
-      const ids = snapshot.val();
-      const index = ids.findIndex((id) => id === userId);
+      const group = snapshot.val();
+      if (group.admin === userId) {
+        this.removeGroup(groupId, group.users, ref);
+        return;
+      }
+      const index = group.users.findIndex((id) => id === userId);
       firebaseApp.database().ref(`groups/${groupId}/users/${index}`).remove();
     });
   }
 
-  async removeGroup(groupId) {
-    const ref = firebaseApp.database().ref(`groups/${groupId}`);
-    const usersRef = ref.child('users');
-    await usersRef.once('value', (snapshot) => {
-      const ids = snapshot.val();
-      ids.forEach((id) => {
-        firebaseApp.database().ref(`users/${id}/groups/${groupId}`).remove();
-      });
+  async removeGroup(groupId, users, group) {
+    users.forEach((id) => {
+      firebaseApp.database().ref(`users/${id}/groups/${groupId}`).remove();
     });
-    ref.remove();
+    group.remove();
+  }
+
+  removeUser(userId) {
+    firebaseApp.database().ref(`users/${userId}`).remove();
   }
 
   syncUserData(category, userId, onUpdate) {

@@ -117,10 +117,11 @@ function NestedRoute({ authService, database, imageUploader }) {
       {loading && <div className={styles.loading}></div>}
       {modal && (
         <GroupModal
+          authService={authService}
           database={database}
           modal={modal}
           userId={userId}
-          group
+          groups={groups}
           changeModalStatus={changeModalStatus}
         />
       )}
@@ -133,7 +134,6 @@ function NestedRoute({ authService, database, imageUploader }) {
       )}
       <Route path={`${_path}/profile`}>
         <ProfileEditForm
-          authService={authService}
           database={database}
           imageUploader={imageUploader}
           userId={userId}
@@ -142,6 +142,7 @@ function NestedRoute({ authService, database, imageUploader }) {
           editProfile={editProfile}
           changeLoadState={changeLoadState}
           changeSidebarShow={changeSidebarShow}
+          changeModalStatus={changeModalStatus}
         />
       </Route>
       <Route path={['/', `${_path}/group/:groupId`]} exact>

@@ -5,8 +5,16 @@ import GroupAddForm from '../group_add_form/group_add_form';
 import GroupEditForm from '../group_edit_form/group_edit_form';
 import GroupDeleteForm from '../group_delete_form/group_delete_form';
 import GroupInfo from '../group_info/group_info';
+import UserDeleteForm from '../user_delete_form/user_delete_form';
 
-const GroupModal = ({ database, modal, userId, changeModalStatus }) => {
+const GroupModal = ({
+  authService,
+  database,
+  modal,
+  userId,
+  groups,
+  changeModalStatus,
+}) => {
   const location = useLocation();
   const [response, setResponse] = useState(null);
   const [result, setResult] = useState(null);
@@ -160,6 +168,15 @@ const GroupModal = ({ database, modal, userId, changeModalStatus }) => {
         <GroupInfo
           database={database}
           userId={userId}
+          changeModalStatus={changeModalStatus}
+        />
+      )}
+      {modal === 'withdraw' && (
+        <UserDeleteForm
+          authService={authService}
+          database={database}
+          userId={userId}
+          groups={groups}
           changeModalStatus={changeModalStatus}
         />
       )}
