@@ -22,7 +22,11 @@ function App({ authService, database, imageUploader }) {
       <div className={styles.app}>
         <Switch>
           <Route path="/login">
-            <Login authService={authService} />
+            <Login
+              authService={authService}
+              database={database}
+              imageUploader={imageUploader}
+            />
           </Route>
           <Route path="/">
             <NestedRoute
@@ -40,8 +44,8 @@ function App({ authService, database, imageUploader }) {
 function NestedRoute({ authService, database, imageUploader }) {
   // Personal User State
   const [userId, setUserId] = useState(null);
-  const [records, setRecords] = useState({});
   const [profile, setProfile] = useState({});
+  const [records, setRecords] = useState({});
   const [groups, setGroups] = useState({});
 
   // UI display status
@@ -53,13 +57,14 @@ function NestedRoute({ authService, database, imageUploader }) {
   const { path } = useRouteMatch();
   const _path = path === '/' ? '' : path;
 
+  const editProfile = useCallback((data) => {
+    setProfile(data);
+  }, []);
+
   const updateRecords = useCallback((records) => {
     setRecords(records);
   }, []);
 
-  const editProfile = useCallback((profile) => {
-    setProfile(profile);
-  }, []);
   const changeLoadState = useCallback((loadState) => {
     setLoading(loadState);
   }, []);
@@ -84,13 +89,17 @@ function NestedRoute({ authService, database, imageUploader }) {
     }
     setLoading(true);
     const stopSync = database.syncUserData('all', userId, (data) => {
-      setProfile(data.profile);
-      setRecords(data.records);
-      setGroups(data.groups);
+      if (!data) {
+        history.push({ pathname: '/login' });
+        return;
+      }
+      editProfile(data.profile);
+      setRecords(data.hasOwnProperty('records') && data.records);
+      setGroups(data.hasOwnProperty('groups') && data.groups);
       setLoading(false);
     });
     return () => stopSync();
-  }, [database, userId]);
+  }, [database, userId, editProfile, history]);
 
   // Determine whether redirect to login according to auth state when auth change.
   useEffect(() => {
@@ -101,7 +110,7 @@ function NestedRoute({ authService, database, imageUploader }) {
       }
       setUserId(user.uid);
     });
-  }, [authService, history, userId]);
+  }, [authService, history, userId, modal, profile]);
 
   return (
     <>

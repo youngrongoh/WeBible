@@ -14,6 +14,10 @@ class AuthService {
     firebaseApp.auth().signOut();
   }
 
+  withdraw() {
+    return firebaseApp.auth().currentUser.delete();
+  }
+
   onAuthChanged(cb) {
     return firebaseApp.auth().onAuthStateChanged(cb);
   }
