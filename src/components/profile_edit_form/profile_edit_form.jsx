@@ -48,7 +48,7 @@ const ProfileEditForm = ({
       const result = await imageUploader.upload(image, userId);
       imageURL = result.url;
     } else {
-      imageURL = profile.imageURL;
+      imageURL = profile.imageURL || '';
     }
 
     const updated = { ...preview, imageURL };
@@ -157,6 +157,7 @@ const ProfileEditForm = ({
                 <option value="구약 1독">구약 1독</option>
                 <option value="신약 1독">신약 1독</option>
                 <option value="신구약 1독">신구약 1독</option>
+                <option value="">미정</option>
               </select>
             </div>
             <div className={styles.buttons}>

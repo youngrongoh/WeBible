@@ -12,7 +12,7 @@ const Profile = ({ profile }) => {
           <ProfileButton name={profile.name} />
         </div>
         <p className={styles.message}>{profile.message}</p>
-        <p className={styles.goal}>"{profile.goal}"</p>
+        {profile.goal && <p className={styles.goal}>"{profile.goal}"</p>}
       </div>
     </section>
   );
