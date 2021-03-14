@@ -56,7 +56,10 @@ const Dashboard = ({
         setUsers(users);
         changeLoadState(false);
       });
-      return () => stopSync();
+      return () => {
+        stopSync();
+        setUsers({});
+      };
     }
   }, [database, groupId, changeLoadState]);
 
