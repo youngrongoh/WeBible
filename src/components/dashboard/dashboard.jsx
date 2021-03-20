@@ -4,6 +4,8 @@ import styles from './dashboard.module.css';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import Header from '../header/header';
 
+const root = process.env.PUBLIC_URL;
+
 const Dashboard = ({
   database,
   bibleList,
@@ -64,49 +66,47 @@ const Dashboard = ({
   }, [database, groupId, changeLoadState]);
 
   return (
-    <>
-      <main className={styles.dashboard}>
-        {groupId && (
-          <Header
-            Button={({ className }) => (
-              <button
-                className={className}
-                onClick={() => {
-                  changeModalStatus('setting');
-                  location.state = { groupName: groups[groupId], groupId };
-                }}
-              >
-                그룹 설정
-              </button>
-            )}
-            title={groups[groupId]}
-            member={Object.keys(users).length}
-            onGoBack={() => history.push('/')}
-          />
-        )}
-        <div className={styles.container}>
-          <RecordSheet
-            bibleList={bibleList}
-            records={records}
-            flex={groupId ? false : true}
-            updateChapter={updateChapter}
-          />
-          {Object.keys(users).length !== 0 &&
-            Object.keys(users).map(
-              (id) =>
-                id !== userId && (
-                  <RecordSheet
-                    key={id}
-                    bibleList={bibleList}
-                    profile={users[id].profile}
-                    records={users[id].records}
-                    updateChapter={updateChapter}
-                  />
-                )
-            )}
-        </div>
-      </main>
-    </>
+    <main className={styles.dashboard}>
+      {groupId && (
+        <Header
+          Button={({ className }) => (
+            <button
+              className={className}
+              onClick={() => {
+                changeModalStatus('setting');
+                location.state = { groupName: groups[groupId], groupId };
+              }}
+            >
+              그룹 설정
+            </button>
+          )}
+          title={groups[groupId]}
+          member={Object.keys(users).length}
+          onGoBack={() => history.push(root)}
+        />
+      )}
+      <div className={styles.container}>
+        <RecordSheet
+          bibleList={bibleList}
+          records={records}
+          flex={groupId ? false : true}
+          updateChapter={updateChapter}
+        />
+        {Object.keys(users).length !== 0 &&
+          Object.keys(users).map(
+            (id) =>
+              id !== userId && (
+                <RecordSheet
+                  key={id}
+                  bibleList={bibleList}
+                  profile={users[id].profile}
+                  records={users[id].records}
+                  updateChapter={updateChapter}
+                />
+              )
+          )}
+      </div>
+    </main>
   );
 };
 

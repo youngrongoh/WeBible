@@ -2,6 +2,8 @@ import React, { useRef, useState } from 'react';
 import { useHistory, useLocation } from 'react-router';
 import styles from './group_delete_form.module.css';
 
+const root = process.env.PUBLIC_URL;
+
 const GroupDeleteForm = ({ database, userId, changeModalStatus }) => {
   const {
     state: { admin, groupId, groupName },
@@ -34,17 +36,14 @@ const GroupDeleteForm = ({ database, userId, changeModalStatus }) => {
     }
     database.removeGroupUser(userId, groupId);
     changeModalStatus(null);
-    history.push('/');
+    history.push(root);
   };
 
   return (
     <div className={styles.container}>
       <header className={styles.header}>
         <div>
-          <button
-            className={styles.back}
-            onClick={() => changeModalStatus(null)}
-          ></button>
+          <button className={styles.back} onClick={() => changeModalStatus(null)}></button>
           <h1 className={styles.title}>{admin ? '그룹 삭제' : '그룹 탈퇴'}</h1>
         </div>
         <button className={styles.button} onClick={onSubmit}>
@@ -66,13 +65,11 @@ const GroupDeleteForm = ({ database, userId, changeModalStatus }) => {
               onChange={onChange}
             />
             <span className={styles.text}>
-              {admin ? '그룹을 영구히 삭제하는' : '그룹에서 탈퇴하는'} 것에
-              동의합니다.
+              {admin ? '그룹을 영구히 삭제하는' : '그룹에서 탈퇴하는'} 것에 동의합니다.
             </span>
           </label>
           <p className={styles.message}>
-            주의! {admin ? '삭제된 그룹' : '그룹에서의 활동내역'}은 복구되지
-            않습니다.
+            주의! {admin ? '삭제된 그룹' : '그룹에서의 활동내역'}은 복구되지 않습니다.
           </p>
         </form>
       </section>

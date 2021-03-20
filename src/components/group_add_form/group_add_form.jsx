@@ -1,9 +1,13 @@
 import React, { useRef, useState } from 'react';
+import { useHistory } from 'react-router';
 import styles from './group_add_form.module.css';
+
+const root = process.env.PUBLIC_URL;
 
 const GroupAddForm = ({ database, userId, changeModalStatus }) => {
   const [value, setValue] = useState('');
   const [reset, setReset] = useState(false);
+  const history = useHistory();
   const inputRef = useRef();
 
   const onChange = (event) => {
@@ -44,16 +48,14 @@ const GroupAddForm = ({ database, userId, changeModalStatus }) => {
     database.saveGroups(groupId, group);
     database.saveUserGroup(userId, groupId, value);
     changeModalStatus(null);
+    history.push(`${root}/group/${groupId}`);
   };
 
   return (
     <div className={styles.container}>
       <header className={styles.header}>
         <div>
-          <button
-            className={styles.back}
-            onClick={() => changeModalStatus('search')}
-          ></button>
+          <button className={styles.back} onClick={() => changeModalStatus('search')}></button>
           <h1 className={styles.title}>새로운 그룹 만들기</h1>
         </div>
         <button className={styles.submit} onClick={onSubmit}>

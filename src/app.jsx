@@ -15,20 +15,21 @@ import * as BIBLE_LIST from './data/bible_list.json';
 import GroupModal from './components/group_modal/group_modal';
 
 const bibleList = BIBLE_LIST.default;
+const root = process.env.PUBLIC_URL;
 
 function App({ authService, database, imageUploader }) {
   return (
     <Router>
       <div className={styles.app}>
         <Switch>
-          <Route path="/login">
+          <Route path={`${root}/login`}>
             <Login
               authService={authService}
               database={database}
               imageUploader={imageUploader}
             />
           </Route>
-          <Route path="/">
+          <Route path={root}>
             <NestedRoute
               authService={authService}
               database={database}
@@ -55,7 +56,6 @@ function NestedRoute({ authService, database, imageUploader }) {
 
   const history = useHistory();
   const { path } = useRouteMatch();
-  const _path = path === '/' ? '' : path;
 
   const editProfile = useCallback((data) => {
     setProfile(data);
@@ -90,7 +90,7 @@ function NestedRoute({ authService, database, imageUploader }) {
     setLoading(true);
     const stopSync = database.syncUserData('all', userId, (data) => {
       if (!data) {
-        history.push({ pathname: '/login' });
+        history.push({ pathname: `${root}/login` });
         return;
       }
       editProfile(data.profile);
@@ -105,12 +105,12 @@ function NestedRoute({ authService, database, imageUploader }) {
   useEffect(() => {
     authService.onAuthChanged((user) => {
       if (!user) {
-        history.push('/login');
+        history.push(`${path}/login`);
         return;
       }
       setUserId(user.uid);
     });
-  }, [authService, history, userId, modal, profile]);
+  }, [authService, history, path]);
 
   return (
     <>
@@ -126,13 +126,9 @@ function NestedRoute({ authService, database, imageUploader }) {
         />
       )}
       {sidebar && (
-        <Sidebar
-          profile={profile}
-          groups={groups}
-          changeModalStatus={changeModalStatus}
-        />
+        <Sidebar profile={profile} groups={groups} changeModalStatus={changeModalStatus} />
       )}
-      <Route path={`${_path}/profile`}>
+      <Route path={`${path}/profile`}>
         <ProfileEditForm
           database={database}
           imageUploader={imageUploader}
@@ -145,7 +141,7 @@ function NestedRoute({ authService, database, imageUploader }) {
           changeModalStatus={changeModalStatus}
         />
       </Route>
-      <Route path={['/', `${_path}/group/:groupId`]} exact>
+      <Route path={[path, `${path}/group/:groupId`]} exact>
         <Dashboard
           database={database}
           bibleList={bibleList}

@@ -1,4 +1,4 @@
-@value makerShadow, makerWhite, makerGray, makerDarkGray, makerNavy from '/src/common/colors.css';
+@value makerRed, makerShadow, makerWhite, makerGray, makerDarkGray, makerNavy from '/src/common/colors.css';
 @value narrowQuery from '/src/common/size.css';
 
 .container {
@@ -72,6 +72,50 @@
 
 .signUpBtn:hover {
   color: makerNavy;
+}
+
+.welcome {
+  text-align: center;
+}
+
+.mention {
+  font-size: 1.2em;
+}
+
+.title {
+  display: block;
+  font-size: 2.5em;
+}
+
+.recommend {
+  position: relative;
+  display: inline-block;
+  font-size: 0.9em;
+  margin-bottom: 0;
+}
+
+.recommend:after {
+  content: '';
+  position: absolute;
+  bottom: -0.2em;
+  left: 50%;
+  width: 1px;
+  height: 1px;
+  background-color: makerRed;
+  transform: translateX(-50%) scaleX(200);
+  animation: lineflex 5s ease infinite;
+}
+
+@keyframes lineflex {
+  0% {
+    transform: translateX(-50%) scaleX(1);
+  }
+  50% {
+    transform: translateX(-50%) scaleX(200);
+  }
+  100% {
+    transform: translateX(-50%) scaleX(1);
+  }
 }
 
 .buttons {

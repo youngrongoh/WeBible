@@ -91,12 +91,25 @@
   }
 
   .group {
+    display: flex;
+    align-items: center;
     padding: 0;
   }
 
   .title {
     display: inline-block;
     margin-left: 1em;
+    flex-basis: 8em;
+  }
+
+  .list {
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .list::-webkit-scrollbar {
+    height: 0;
+    background-color: transparent;
   }
 
   .list,

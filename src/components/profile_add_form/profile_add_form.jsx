@@ -3,12 +3,9 @@ import { useHistory, useLocation } from 'react-router-dom';
 import Header from '../header/header';
 import styles from './profile_add_form.module.css';
 
-const ProfileAddForm = ({
-  authService,
-  database,
-  imageUploader,
-  changeModal,
-}) => {
+const root = process.env.PUBLIC_URL;
+
+const ProfileAddForm = ({ authService, database, imageUploader, changeModal }) => {
   const [name, setName] = useState(null);
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState(null);
@@ -67,7 +64,7 @@ const ProfileAddForm = ({
       return;
     }
     database.saveUserData('profile', userId, { name, imageURL });
-    history.push({ pathname: '/', state: { userId } });
+    history.push({ pathname: root, state: { userId } });
   };
 
   return (
@@ -88,7 +85,7 @@ const ProfileAddForm = ({
               ref={imgRef}
               className={styles.imputFile}
               type="file"
-              accept="image/*"
+              accept="image/jpeg, image/png"
               name="image"
               onChange={onImageChange}
             />
@@ -107,16 +104,10 @@ const ProfileAddForm = ({
               />
             </label>
             <div className={styles.buttons}>
-              <button
-                className={`${styles.button} ${styles.cancel}`}
-                onClick={onCancel}
-              >
+              <button className={`${styles.button} ${styles.cancel}`} onClick={onCancel}>
                 취소
               </button>
-              <button
-                className={`${styles.button} ${styles.submit}`}
-                onClick={onSubmit}
-              >
+              <button className={`${styles.button} ${styles.submit}`} onClick={onSubmit}>
                 가입하기
               </button>
             </div>

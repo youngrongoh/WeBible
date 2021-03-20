@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router';
 import styles from './group_info.module.css';
 
+const root = process.env.PUBLIC_URL;
+
 const GroupInfo = ({ database, userId, changeModalStatus }) => {
   const history = useHistory();
   const location = useLocation();
@@ -14,7 +16,7 @@ const GroupInfo = ({ database, userId, changeModalStatus }) => {
     const filtered = [...group.users, userId].filter((user) => Boolean(user));
     database.saveGroups(groupId, filtered, 'users');
     database.saveUserGroup(userId, groupId, group.name);
-    history.push(`/group/${groupId}`);
+    history.push(`${root}/group/${groupId}`);
     changeModalStatus(null);
   };
 
@@ -27,10 +29,7 @@ const GroupInfo = ({ database, userId, changeModalStatus }) => {
   return (
     <div className={styles.container}>
       <header className={styles.header}>
-        <button
-          className={styles.back}
-          onClick={() => changeModalStatus('search')}
-        ></button>
+        <button className={styles.back} onClick={() => changeModalStatus('search')}></button>
       </header>
       <section className={styles.body}>
         <div className={styles.info}>
