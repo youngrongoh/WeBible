@@ -75,7 +75,7 @@ const ProfileAddForm = ({ authService, database, imageUploader, changeModal }) =
           <div className={styles.left}>
             <img
               className={styles.image}
-              src={preview || 'images/default_avatar.png'}
+              src={preview || `${root}/images/default_avatar.png`}
               alt="preview"
             />
             <button className={styles.imageButton} onClick={onImgBtnClick}>

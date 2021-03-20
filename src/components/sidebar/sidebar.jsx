@@ -40,7 +40,7 @@ const Sidebar = ({ profile, groups, changeModalStatus }) => {
           </ul>
         </div>
         <div className={styles.fixed}>
-          <img className={styles.logo} src="images/logo.png" alt="logo" />
+          <img className={styles.logo} src={`${root}/images/logo.png`} alt="logo" />
         </div>
       </aside>
     </>

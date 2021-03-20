@@ -3,6 +3,8 @@ import { useHistory, useLocation } from 'react-router-dom';
 import Header from '../header/header';
 import styles from './profile_edit_form.module.css';
 
+const root = process.env.PUBLIC_URL;
+
 const ProfileEditForm = ({
   database,
   imageUploader,
@@ -24,7 +26,7 @@ const ProfileEditForm = ({
   const goalRef = useRef();
   const imgRef = useRef();
 
-  const url = preview.imageURL || '/images/default_avatar.png';
+  const url = preview.imageURL || `${root}/images/default_avatar.png`;
 
   const onChange = (event) => {
     event.preventDefault();
@@ -161,16 +163,10 @@ const ProfileEditForm = ({
               </select>
             </div>
             <div className={styles.buttons}>
-              <button
-                className={`${styles.button} ${styles.reset}`}
-                onClick={onReset}
-              >
+              <button className={`${styles.button} ${styles.reset}`} onClick={onReset}>
                 되돌리기
               </button>
-              <button
-                className={`${styles.button} ${styles.edit}`}
-                onClick={onEditClick}
-              >
+              <button className={`${styles.button} ${styles.edit}`} onClick={onEditClick}>
                 바꾸기
               </button>
             </div>

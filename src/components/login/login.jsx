@@ -61,7 +61,7 @@ const Login = ({ authService, database, imageUploader }) => {
         <div className={styles.login}>
           <header className={styles.header}>
             <h1>Login</h1>
-            <img className={styles.logo} src="images/logo.png" alt="logo" />
+            <img className={styles.logo} src={`${root}/images/logo.png`} alt="logo" />
           </header>
           <form className={styles.form}>
             {/* <label className={styles.label} htmlFor="id">
