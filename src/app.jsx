@@ -8,11 +8,11 @@ import {
 } from 'react-router-dom';
 import styles from './app.module.css';
 import Sidebar from './components/sidebar/sidebar';
-import Dashboard from './components/dashboard/dashboard';
-import Login from './components/login/login';
-import ProfileEditForm from './components/profile_edit_form/profile_edit_form';
+import Dashboard from './components/main/dashboard/dashboard/dashboard';
+import Login from './components/main/login/login/login';
+import ProfileEditForm from './components/main/profile_edit_form/profile_edit_form';
 import * as BIBLE_LIST from './data/bible_list.json';
-import GroupModal from './components/group_modal/group_modal';
+import Modal from './components/modal/modal/modal';
 
 const bibleList = BIBLE_LIST.default;
 const root = process.env.PUBLIC_URL;
@@ -116,7 +116,7 @@ function NestedRoute({ authService, database, imageUploader }) {
     <>
       {loading && <div className={styles.loading}></div>}
       {modal && (
-        <GroupModal
+        <Modal
           authService={authService}
           database={database}
           modal={modal}

@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './group_modal.module.css';
+import styles from './modal.module.css';
 import GroupSearch from '../group_search/group_search';
 import GroupAddForm from '../group_add_form/group_add_form';
 import GroupEditForm from '../group_edit_form/group_edit_form';
@@ -7,14 +7,7 @@ import GroupDeleteForm from '../group_delete_form/group_delete_form';
 import GroupInfo from '../group_info/group_info';
 import UserDeleteForm from '../user_delete_form/user_delete_form';
 
-const GroupModal = ({
-  authService,
-  database,
-  modal,
-  userId,
-  groups,
-  changeModalStatus,
-}) => {
+const Modal = ({ authService, database, modal, userId, groups, changeModalStatus }) => {
   const onBGClick = (event) => {
     if (!event.target.matches(`.${styles.modal}`)) {
       return;
@@ -32,11 +25,7 @@ const GroupModal = ({
         />
       )}
       {modal === 'search' && (
-        <GroupSearch
-          database={database}
-          modal={modal}
-          changeModalStatus={changeModalStatus}
-        />
+        <GroupSearch database={database} modal={modal} changeModalStatus={changeModalStatus} />
       )}
       {modal === 'setting' && (
         <GroupEditForm
@@ -53,11 +42,7 @@ const GroupModal = ({
         />
       )}
       {modal === 'info' && (
-        <GroupInfo
-          database={database}
-          userId={userId}
-          changeModalStatus={changeModalStatus}
-        />
+        <GroupInfo database={database} userId={userId} changeModalStatus={changeModalStatus} />
       )}
       {modal === 'withdraw' && (
         <UserDeleteForm
@@ -72,4 +57,4 @@ const GroupModal = ({
   );
 };
 
-export default GroupModal;
+export default Modal;

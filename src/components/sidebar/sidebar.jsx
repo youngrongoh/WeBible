@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import { Link } from 'react-router-dom';
-import Profile from '../profile/profile';
+import Profile from '../profile/profile/profile';
 import styles from './sidebar.module.css';
 
 const root = process.env.PUBLIC_URL;

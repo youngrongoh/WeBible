@@ -1,6 +1,6 @@
 import React from 'react';
-import Avatar from '../avatar/avatar';
-import ProfileButton from '../profile_button/profile_button';
+import Avatar from '../../../profile/avatar/avatar';
+import ProfileButton from '../../../profile/profile_button/profile_button';
 import BibleItem from '../bible_item/bible_item';
 import styles from './record_sheet.module.css';
 

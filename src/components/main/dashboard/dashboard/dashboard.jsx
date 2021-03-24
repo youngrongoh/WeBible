@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import RecordSheet from '../record_sheet/record_sheet';
 import styles from './dashboard.module.css';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
-import Header from '../header/header';
+import Header from '../../header/header';
 
 const root = process.env.PUBLIC_URL;
 

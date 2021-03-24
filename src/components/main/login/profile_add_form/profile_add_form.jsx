@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
-import Header from '../header/header';
+import Header from '../../header/header';
 import styles from './profile_add_form.module.css';
 
 const root = process.env.PUBLIC_URL;
