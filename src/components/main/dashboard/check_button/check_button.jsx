@@ -1,30 +1,13 @@
 import React, { memo } from 'react';
 import styles from './check_button.module.css';
 
-const CheckButton = ({
-  checkedChapter,
-  bibleId,
-  number,
-  editable,
-  updateChapter,
-}) => {
-  const readonlyStyle = editable ? '' : styles.readonly;
-
-  const onClick = (event) => {
-    if (!editable) {
-      return;
-    }
-    const targetText = event.target.textContent;
-    updateChapter(bibleId, checkedChapter, parseInt(targetText));
-  };
-
+const CheckButton = ({ checked, bibleId, number }) => {
   return (
     <li className={styles.item}>
       <button
-        className={`${styles.button} ${getButtonStyle(
-          checkedChapter
-        )} ${readonlyStyle}`}
-        onClick={onClick}
+        className={`${styles.button} ${getButtonStyle(checked)}`}
+        data-bible-id={bibleId}
+        data-checked={checked}
       >
         {number}
       </button>

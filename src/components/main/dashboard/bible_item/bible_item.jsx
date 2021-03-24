@@ -2,20 +2,17 @@ import React, { memo } from 'react';
 import CheckButton from '../check_button/check_button';
 import styles from './bible_item.module.css';
 
-const BibleItem = ({ bible, checkedChapters, editable, updateChapter }) => {
+const BibleItem = ({ bible, editable, checkedChapters, updateChapter }) => {
   const renderButtons = () => {
     const result = [];
     for (let i = 0; i < bible.chapters; i++) {
-      const checked = checkedChapters
-        ? checkedChapters.find((chapter) => chapter === i + 1)
-        : null;
+      const checked = checkedChapters ? checkedChapters.includes(i + 1) : null;
       result.push(
         <CheckButton
           key={i}
           bibleId={bible.id}
           number={i + 1}
-          checkedChapter={checked}
-          editable={editable}
+          checked={checked}
           updateChapter={updateChapter}
         />
       );
@@ -24,9 +21,9 @@ const BibleItem = ({ bible, checkedChapters, editable, updateChapter }) => {
   };
 
   return (
-    <li className={styles.item}>
+    <li className={`${styles.item} ${!editable && styles.ineditable}`}>
       <p className={styles.name}>{bible.name}</p>
-      <ul>{renderButtons()}</ul>
+      <ol>{renderButtons()}</ol>
     </li>
   );
 };

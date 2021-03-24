@@ -16,10 +16,6 @@
   opacity: 0.5;
 }
 
-.button.readonly {
-  cursor: auto;
-}
-
 .button:not(.readonly):hover {
   background-color: makerOrange;
   opacity: 0.8;

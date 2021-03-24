@@ -6,6 +6,10 @@
   font-size: 1em;
 }
 
+.item.ineditable {
+  pointer-events: none;
+}
+
 .name {
   min-width: 7em;
   font-weight: bold;

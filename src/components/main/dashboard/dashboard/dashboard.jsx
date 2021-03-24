@@ -22,16 +22,18 @@ const Dashboard = ({
   const [users, setUsers] = useState({});
 
   // Return an array removed a chapter of the clicked or contain it.
-  const getChapters = (bible, chapter, target) => {
+  const getChapters = (bible, checked, chapter) => {
     if (records[bible] === undefined) {
-      return [target];
+      return [chapter];
     }
     // remove or push the chapter.
-    if (chapter) {
-      return records[bible].filter((_chapter) => _chapter !== chapter);
+    if (checked) {
+      return records[bible].filter((_chapter) => {
+        return _chapter !== chapter;
+      });
     } else {
       const updated = [...records[bible]];
-      updated.push(target);
+      updated.push(chapter);
       return updated;
     }
   };
@@ -41,8 +43,8 @@ const Dashboard = ({
    * @params chapter: Chapter number of the button.
    * @params target: the clicked button.
    */
-  const updateChapter = (bibleId, chapter, target) => {
-    const chapters = getChapters(bibleId, chapter, target);
+  const updateChapter = (bibleId, checked, chapter) => {
+    const chapters = getChapters(bibleId, checked, chapter);
     updateRecords((records) => {
       const updated = { ...records, [bibleId]: chapters };
       database.saveUserData('records', userId, updated);

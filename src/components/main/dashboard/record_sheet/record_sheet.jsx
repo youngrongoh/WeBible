@@ -13,12 +13,22 @@ const RecordSheet = ({ bibleList, profile, records, flex, updateChapter }) => {
         <BibleItem
           key={key}
           bible={bible}
+          editable={!profile ? true : false}
           checkedChapters={checkedChapters}
-          editable={profile ? false : true}
           updateChapter={updateChapter}
         />
       );
     });
+
+  const onListClick = (event) => {
+    const target = event.target;
+    if (target.tagName === 'BUTTON') {
+      const bibleId = target.dataset.bibleId;
+      const checked = target.dataset.checked;
+      const text = parseInt(target.textContent);
+      updateChapter(bibleId, checked === 'true', text);
+    }
+  };
 
   return (
     <section className={getStyle(flex, 'sheet')}>
@@ -29,7 +39,9 @@ const RecordSheet = ({ bibleList, profile, records, flex, updateChapter }) => {
         </div>
       )}
       <div className={getStyle(!profile, 'container')}>
-        <ul className={styles.list}>{renderItems()}</ul>
+        <ol className={styles.list} onClick={(event) => !profile && onListClick(event)}>
+          {renderItems()}
+        </ol>
       </div>
     </section>
   );
