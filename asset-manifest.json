@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/WeBible/static/css/main.e666b262.chunk.css",
-    "main.js": "/WeBible/static/js/main.64567197.chunk.js",
-    "main.js.map": "/WeBible/static/js/main.64567197.chunk.js.map",
+    "main.css": "/WeBible/static/css/main.f3a3448a.chunk.css",
+    "main.js": "/WeBible/static/js/main.4bc85ea5.chunk.js",
+    "main.js.map": "/WeBible/static/js/main.4bc85ea5.chunk.js.map",
     "runtime-main.js": "/WeBible/static/js/runtime-main.e5f68d32.js",
     "runtime-main.js.map": "/WeBible/static/js/runtime-main.e5f68d32.js.map",
-    "static/js/2.325a5df1.chunk.js": "/WeBible/static/js/2.325a5df1.chunk.js",
-    "static/js/2.325a5df1.chunk.js.map": "/WeBible/static/js/2.325a5df1.chunk.js.map",
+    "static/js/2.87ab88d4.chunk.js": "/WeBible/static/js/2.87ab88d4.chunk.js",
+    "static/js/2.87ab88d4.chunk.js.map": "/WeBible/static/js/2.87ab88d4.chunk.js.map",
     "index.html": "/WeBible/index.html",
-    "static/css/main.e666b262.chunk.css.map": "/WeBible/static/css/main.e666b262.chunk.css.map",
-    "static/js/2.325a5df1.chunk.js.LICENSE.txt": "/WeBible/static/js/2.325a5df1.chunk.js.LICENSE.txt"
+    "static/css/main.f3a3448a.chunk.css.map": "/WeBible/static/css/main.f3a3448a.chunk.css.map",
+    "static/js/2.87ab88d4.chunk.js.LICENSE.txt": "/WeBible/static/js/2.87ab88d4.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.e5f68d32.js",
-    "static/js/2.325a5df1.chunk.js",
-    "static/css/main.e666b262.chunk.css",
-    "static/js/main.64567197.chunk.js"
+    "static/js/2.87ab88d4.chunk.js",
+    "static/css/main.f3a3448a.chunk.css",
+    "static/js/main.4bc85ea5.chunk.js"
   ]
 }
