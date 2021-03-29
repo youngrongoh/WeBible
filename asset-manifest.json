@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/WeBible/static/css/main.f3a3448a.chunk.css",
-    "main.js": "/WeBible/static/js/main.4bc85ea5.chunk.js",
-    "main.js.map": "/WeBible/static/js/main.4bc85ea5.chunk.js.map",
+    "main.js": "/WeBible/static/js/main.2bf4a62b.chunk.js",
+    "main.js.map": "/WeBible/static/js/main.2bf4a62b.chunk.js.map",
     "runtime-main.js": "/WeBible/static/js/runtime-main.e5f68d32.js",
     "runtime-main.js.map": "/WeBible/static/js/runtime-main.e5f68d32.js.map",
     "static/js/2.87ab88d4.chunk.js": "/WeBible/static/js/2.87ab88d4.chunk.js",
@@ -15,6 +15,6 @@
     "static/js/runtime-main.e5f68d32.js",
     "static/js/2.87ab88d4.chunk.js",
     "static/css/main.f3a3448a.chunk.css",
-    "static/js/main.4bc85ea5.chunk.js"
+    "static/js/main.2bf4a62b.chunk.js"
   ]
 }
